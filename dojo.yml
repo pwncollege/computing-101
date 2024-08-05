@@ -1,4 +1,4 @@
 name: Computing 101
 id: computing-101
 modules:
-  - your-first-program
+- id: your-first-program
