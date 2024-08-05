@@ -1,3 +1,4 @@
 name: Your First Program
 challenges:
-  - rax
+- id: rax
+  name: "Registers and Values"
