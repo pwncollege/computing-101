@@ -1,21 +1,21 @@
 name: Your First Program
 resources:
-  - name: "Assembly Crash Course: Computer Architecture"
+  - name: "Computer Architecture"
     type: lecture
     video: o_kSgUPJk4c
     playlist: PL-ymxv0nOtqox6nF4HXtXHnTQFGkRQU_2
     slides: 1sVyPL92gbzg_it9aIeC-CjXtF2tpvAmZTKjWc-SlU0c
-  - name: "Assembly Crash Course: Assembly"
+  - name: "Assembly"
     type: lecture
     video: TdTOH1GfrWg
     playlist: PL-ymxv0nOtqox6nF4HXtXHnTQFGkRQU_2
     slides: 1sBB34ZUVjT3MDjYvGiZU3z6CTLGvO1hHEdHliPUJ0iw
-  - name: "Assembly Crash Course: Data"
+  - name: "Data"
     type: lecture
     video: 21MvbpgssU8
     playlist: PL-ymxv0nOtqox6nF4HXtXHnTQFGkRQU_2
     slides: 1SeyZbM_qCDz4t03KDZ8Q0qi1GzsSSSJAkO-KeVlAL7w
-  - name: "Assembly Crash Course: Registers"
+  - name: "Registers"
     type: lecture
     video: IWbIZerH930
     playlist: PL-ymxv0nOtqox6nF4HXtXHnTQFGkRQU_2
