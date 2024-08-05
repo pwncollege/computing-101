@@ -1,0 +1,123 @@
+#!/opt/pwn.college/python
+
+import pwnlib.context
+import pwnlib.asm
+import tempfile
+import magic
+import sys
+import os
+
+pwnlib.context.context.arch = "amd64"
+
+sys.path.append("/challenge/.py")
+import chal #pylint:disable=import-error,wrong-import-position
+
+if os.geteuid() == 0:
+	os.seteuid(65534)
+
+class ChallengeFailed(Exception):
+	pass
+
+def assemble(asm):
+	if not getattr(chal, "allow_asm", False):
+		raise ChallengeFailed(
+			"This challenge requires you to assemble the code yourself. "
+			"Please do that."
+		)
+
+	try:
+		x86 = pwnlib.asm.asm(asm)
+	except pwnlib.exception.PwnlibException as e:
+		errors = e.message.split("\n")
+		if (
+			errors[0].startswith("There was an error running") and
+			"Assembler messages" in errors[3]
+		):
+			msg = "\n".join(
+				"- "+line.split(" ", 1)[-1]
+				for line in errors[4:]
+				if line
+			)
+			raise ChallengeFailed(
+				f"Your assembly did not assemble cleanly. The errors:\n{msg}"
+			) from e
+
+		raise ChallengeFailed(
+			"Your assembly resulted in unexpected assembly errors:\n" +
+			e.message
+		) from e
+
+	return x86
+
+def get_raw_binary(content):
+	if magic.from_buffer(content) == "ELF 64-bit LSB relocatable":
+		raise ChallengeFailed(
+			"It looks like you assembled your assembly code, "
+			"but did not yet create a runnable ELF from it. "
+			"Please do that with the 'ld' command!"
+		)
+	if magic.from_buffer(content) in (
+		"ELF 64-bit LSB shared object",
+		"ELF 64-bit LSB pie executable"
+	):
+		if getattr(chal, "allow_elf", True):
+			raise ChallengeFailed(
+				"This challenge requires you to provide raw binary code, "
+				"but you provided an ELF. Please extract your .text segment "
+				"using 'objcopy'!"
+			)
+		tmpelf = tempfile.mktemp()
+		with open(tmpelf, "wb") as o:
+			o.write(content)
+		text = pwnlib.elf.ELF(tmpelf).get_section_by_name(".text")
+		if not text:
+			raise ChallengeFailed(
+				"The ELF you provided is missing the .text section!"
+			)
+		rawbin = text.data()
+		if not rawbin:
+			raise ChallengeFailed(
+				"The .text section of the ELF you provided is empty!"
+			)
+		return rawbin
+	elif magic.from_buffer(content).startswith("ASCII"):
+		return assemble(content.decode('latin1'))
+	else: #assuming this is binary code
+		return content
+
+def success():
+	print("SUCCESS! Congratulations, here is your flag:")
+ 	#pylint:disable=consider-using-with,unspecified-encoding
+	print(open("/flag").read())
+
+def main():
+	if len(sys.argv) == 2:
+		filename = sys.argv[1]
+		try:
+			#pylint:disable=consider-using-with,unspecified-encoding
+			content = open(filename, "rb").read()
+		except FileNotFoundError as e:
+			raise ChallengeFailed(f"File {filename} not found.") from e
+		except PermissionError as e:
+			raise ChallengeFailed(f"Permission denied when opening {filename}.") from e
+	elif not os.isatty(0):
+		content = sys.stdin.buffer.read()
+	else:
+		content = os.read(0, 0x31337)
+
+	rawbin = get_raw_binary(content)
+	if getattr(chal, "check_raw_binary", lambda *args: True)(rawbin):
+		if os.geteuid() == 65534:
+			os.seteuid(0)
+		getattr(chal, "success", success)()
+
+
+if __name__ == '__main__':
+	try:
+		main()
+	except (ChallengeFailed, AssertionError) as _e:
+		print("Challenge not solved... Details below:")
+		print(_e)
+	#except Exception as _e: #pylint:disable=broad-exception-caught
+	#	print("Unexpected error during challenge evaluation! The error:")
+	#	print(_e)
