@@ -27,3 +27,5 @@ challenges:
   name: "Exiting Programs"
 - id: exit-code
   name: "Exit Codes"
+- id: strace
+  name: "Tracing Syscalls"
