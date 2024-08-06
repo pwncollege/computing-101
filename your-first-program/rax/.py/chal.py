@@ -32,7 +32,7 @@ def check_disassembly(disas):
 
 	return True
 
-def success():
+def success(raw_binary):
 	print("\033[92m", end='') # green
 	print("Congratulations, you have written your first program!")
 	print("Now let's see what happens when you run it:")

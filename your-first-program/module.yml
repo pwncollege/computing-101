@@ -22,4 +22,6 @@ resources:
     slides: 1U8Rsz7FNTmy-3wGtPB-YCyanIIbox1J90adze9-1cfo
 challenges:
 - id: rax
-  name: "Registers and Values"
+  name: "Setting Registers"
+- id: exit
+  name: "Exiting Programs"
