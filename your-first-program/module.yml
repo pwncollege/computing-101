@@ -25,3 +25,5 @@ challenges:
   name: "Setting Registers"
 - id: exit
   name: "Exiting Programs"
+- id: exit-code
+  name: "Exit Codes"
