@@ -59,18 +59,18 @@ def success(raw_binary):
 		pwnlib.asm.make_elf(raw_binary, extract=False),
 		filename
 	)
-	print(f"hacker@{socket.gethostname()}:{
+	print(f"""hacker@{socket.gethostname()}:{
 		os.getcwd().replace(os.path.expanduser('~'), '~', 1)
-	}$ ", end="")
+	}$ """, end="")
 	for c in filename:
 		print(c, end="")
 		time.sleep(0.1)
 		sys.stdout.flush()
 	print("")
 	time.sleep(0.5)
-	print(f"hacker@{socket.gethostname()}:{
+	print(f"""hacker@{socket.gethostname()}:{
 		os.getcwd().replace(os.path.expanduser('~'), '~', 1)
-	}$ ")
+	}$ """)
 	time.sleep(0.5)
 
 	print("\033[92m") # green

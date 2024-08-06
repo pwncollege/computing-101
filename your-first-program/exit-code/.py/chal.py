@@ -33,9 +33,9 @@ def check_disassembly(disas):
 	return True
 
 def print_prompt():
-	print(f"hacker@{socket.gethostname()}:{
+	print(f"""hacker@{socket.gethostname()}:{
 		os.getcwd().replace(os.path.expanduser('~'), '~', 1)
-	}$ ", end="", flush=True)
+	}$ """, end="", flush=True)
 
 def slow_print(what):
 	for c in what:
