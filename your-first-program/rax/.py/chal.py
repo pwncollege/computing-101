@@ -1,23 +1,10 @@
 import pwnlib.asm
 
 allow_asm = True
+num_instructions = 1
 
-def check_raw_binary(raw_binary):
-	try:
-		disas_lines = pwnlib.asm.disasm(raw_binary).split("\n")
-	except pwnlib.exception.PwnlibException as e:
-		raise AssertionError(
-			"Your assembly failed to disassemble...\n"
-			"One possibility for this is that you sent an extra newline.\n"
-			"The specific error:\n" + str(e)
-		) from e
-
-	assert len(disas_lines) == 1, (
-		"This challenge expects a single instruction, but you provided\n"
-		f"{len(disas_lines)} instructions."
-	)
-
-	operation, operands = disas_lines[0].split(" "*4, 2)[-2:]
+def check_disassembly(disas_lines):
+	operation, operands = disas_lines[0].rsplit(" "*4, 2)[-2:]
 	assert operation == "mov", (
 		f"Your instruction's operation must be 'mov', but yours was {operation}."
 	)

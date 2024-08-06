@@ -105,11 +105,39 @@ def main():
 	else:
 		content = os.read(0, 0x31337)
 
-	rawbin = get_raw_binary(content)
-	if getattr(chal, "check_raw_binary", lambda *args: True)(rawbin):
-		if os.geteuid() == 65534:
-			os.seteuid(0)
-		getattr(chal, "success", success)()
+	raw_binary = get_raw_binary(content)
+
+	try:
+		disas_lines = pwnlib.asm.disasm(raw_binary).split("\n")
+	except pwnlib.exception.PwnlibException as e:
+		if raw_binary.endswith(b"\n"):
+			raise ChallengeFailed(
+				"Your assembly failed to disassemble...\n"
+				"One possibility for this is that you sent an extra newline.\n"
+				"The specific error:\n" + str(e)
+			) from e
+		raise ChallengeFailed(
+			"Your assembly failed to disassemble... "
+			"The specific error:\n" + str(e)
+		) from e
+
+	num_instructions = getattr(chal, "num_instructions", None)
+	if num_instructions is not None:
+		assert len(disas_lines) == num_instructions, (
+			f"This challenge expects {num_instructions} "
+			f"instruction{'s' if num_instructions != 1 else ''}, "
+			f"but you provided {len(disas_lines)} instructions."
+		)
+
+	if not getattr(chal, "check_raw_binary", lambda *args: True)(disas_lines):
+		raise ChallengeFailed("Raw binary check did not succeed...")
+
+	if not getattr(chal, "check_disassembly", lambda *args: True)(disas_lines):
+		raise ChallengeFailed("Disassembly check did not succeed...")
+
+	if os.geteuid() == 65534:
+		os.seteuid(0)
+	getattr(chal, "success", success)()
 
 
 if __name__ == '__main__':
