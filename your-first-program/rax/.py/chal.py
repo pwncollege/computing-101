@@ -1,27 +1,25 @@
-import pwnlib.asm
-
 allow_asm = True
 num_instructions = 1
 
-def check_disassembly(disas_lines):
-	operation, operands = disas_lines[0].rsplit(" "*4, 2)[-2:]
+def check_disassembly(disas):
+	operation = disas[0].mnemonic
 	assert operation == "mov", (
 		f"Your instruction's operation must be 'mov', but yours was {operation}."
 	)
 
-	assert operands.startswith("rax"), (
+	opnd1, opnd2 = disas[0].op_str.split(", ")
+	assert opnd1 == "rax", (
 		"You must move your data to the 'rax' register, but you are moving "
-		f"to {operands.split()[0]}."
+		f"to {opnd1}."
 	)
 
 	try:
-		operand_two = operands.split()[-1]
-		assert int(operand_two, 0) == 60, (
+		assert int(opnd2, 0) == 60, (
 			"You must move the value 60 into rax, whereas you moved "
-			f"{int(operand_two, 0)}."
+			f"{int(opnd2, 0)}."
 		)
 	except ValueError as e:
-		if operand_two.startswith("r"):
+		if opnd2.startswith("r"):
 			raise AssertionError(
 				"It looks like you are trying to move values from one register\n"
 				"to another, rather than specifying a number to move to rax.\n"
@@ -29,7 +27,7 @@ def check_disassembly(disas_lines):
 			) from e
 		raise AssertionError(
 			"You must move the value 60 into rax, whereas you instead specified "
-			f"{int(operand_two, 0)}."
+			f"{opnd2}."
 		) from e
 
 	return True
