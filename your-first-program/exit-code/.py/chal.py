@@ -46,7 +46,7 @@ def slow_print(what):
 def dramatic_command(command, actual_command=None):
 	print_prompt()
 	slow_print(command)
-	exit_code = os.waitstatus_to_exitcode(
+	exit_code = os.WEXITSTATUS(
 		os.system(command if actual_command is None else actual_command)
 	)
 	time.sleep(0.5)
@@ -71,8 +71,9 @@ def success(raw_binary):
 
 	if r == 42:
 		print("\033[92m") # green
-		print("Neat! Your program exited cleanly! Let's push on to make things")
-		print("more interesting! Take this with you:")
+		print("Neat! Your program exited with the correct error code! But what")
+		print("if it hadn't? Next, we'll learn about some simple debugging.")
+		print("For now, take this with you:")
 
 		print("\033[0m", end="") # blank
 		#pylint:disable=consider-using-with,unspecified-encoding

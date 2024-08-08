@@ -109,7 +109,13 @@ def main():
 	elif not os.isatty(0):
 		content = sys.stdin.buffer.read()
 	else:
-		content = os.read(0, 0x31337)
+		if chal.allow_asm:
+			print("Please input your assembly. Press Ctrl+D when done!")
+		else:
+			print("Please input your assembled binary:")
+		content = b""
+		while line := sys.stdin.buffer.readline():
+			content += line
 
 	raw_binary = get_raw_binary(content)
 
