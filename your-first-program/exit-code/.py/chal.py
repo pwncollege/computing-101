@@ -10,18 +10,18 @@ num_instructions = 3
 def check_disassembly(disas):
 	assert disas[0].mnemonic == "mov" and disas[1].mnemonic == "mov", (
 		"Your first two instructions must be 'mov' instructions: one to\n"
-		"move a value into rdi, and one to move a value into rax.\n"
+		"move a value into dil, and one to move a value into al.\n"
 	)
 
 	opnds1 = disas[0].op_str.split(", ")
 	opnds2 = disas[1].op_str.split(", ")
 	regs, vals = zip(opnds1, opnds2)
-	assert set(regs) == { 'rax', 'rdi' }, (
-		"You must set both the rax register and the rdi register!"
+	assert set(regs) == { 'al', 'dil' }, (
+		"You must set both the al register and the dil register!"
 	)
 
-	assert ( ['rax','0x3c'] in [ opnds1, opnds2 ] ), (
-		"You must properly set the 'exit' system call number (60 in rax)!"
+	assert ( ['al','0x3c'] in [ opnds1, opnds2 ] ), (
+		"You must properly set the 'exit' system call number (60 in al)!"
 	)
 
 	operation = disas[2].mnemonic
@@ -80,6 +80,6 @@ def success(raw_binary):
 	else:
 		print('\033[0;31m') # red
 		print("Your program exited with the wrong error code. Please make sure")
-		print(f"to set 'rdi' to 42 (you exited with '{r}'!")
+		print(f"to set 'dil' to 42 (you exited with '{r}'!")
 		print("\033[0m", end="") # blank
 

@@ -8,25 +8,25 @@ def check_disassembly(disas):
 	)
 
 	opnd1, opnd2 = disas[0].op_str.split(", ")
-	assert opnd1 == "rax", (
-		"You must move your data to the 'rax' register, but you are moving "
+	assert opnd1 == "al", (
+		"You must move your data to the 'al' register, but you are moving "
 		f"to {opnd1}."
 	)
 
 	try:
 		assert int(opnd2, 0) == 60, (
-			"You must move the value 60 into rax, whereas you moved "
+			"You must move the value 60 into al, whereas you moved "
 			f"{int(opnd2, 0)}."
 		)
 	except ValueError as e:
 		if opnd2.startswith("r"):
 			raise AssertionError(
 				"It looks like you are trying to move values from one register\n"
-				"to another, rather than specifying a number to move to rax.\n"
-				"Try moving 60 to rax!"
+				"to another, rather than specifying a number to move to al.\n"
+				"Try moving 60 to al!"
 			) from e
 		raise AssertionError(
-			"You must move the value 60 into rax, whereas you instead specified "
+			"You must move the value 60 into al, whereas you instead specified "
 			f"{opnd2}."
 		) from e
 
@@ -41,7 +41,7 @@ def success(raw_binary):
 	print("\033[92m") # green
 	print("... uh oh. The program crashed! We'll go into more details about")
 	print("what a Segmentation Fault is later, but in this case, the program")
-	print("crashed because, after the CPU moved the value 60 into rax, it was")
+	print("crashed because, after the CPU moved the value 60 into al, it was")
 	print("never instructed to stop execution. With no further instructions")
 	print("to execute, and no directive to stop, it crashed.")
 	print("")

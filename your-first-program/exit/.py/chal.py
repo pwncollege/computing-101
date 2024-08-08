@@ -15,25 +15,25 @@ def check_disassembly(disas):
 	)
 
 	opnd1, opnd2 = disas[0].op_str.split(", ")
-	assert opnd1 == "rax", (
-		"You must move your system call index to the 'rax' register, "
+	assert opnd1 == "al", (
+		"You must move your system call index to the 'al' register, "
 		f"but you are moving to {opnd1}."
 	)
 
 	try:
 		assert int(opnd2, 0) == 60, (
-			"You must move the syscall index of exit (60) into rax, "
+			"You must move the syscall index of exit (60) into al, "
 			f"whereas you moved {int(opnd2, 0)}."
 		)
 	except ValueError as e:
 		if opnd2.startswith("r"):
 			raise AssertionError(
 				"It looks like you are trying to move values from one register\n"
-				"to another, rather than specifying a number to move to rax.\n"
-				"Try moving 60 to rax!"
+				"to another, rather than specifying a number to move to al.\n"
+				"Try moving 60 to al!"
 			) from e
 		raise AssertionError(
-			"You must move the syscall index of exit (60) into rax, whereas\n"
+			"You must move the syscall index of exit (60) into al, whereas\n"
 			f"you instead specified {opnd2}."
 		) from e
 
