@@ -13,7 +13,12 @@ exit(42)                                 = ?
 hacker@dojo:~$
 ```
 
-Here, `strace` reports two system calls: the second is the `exit` system call that your program uses to request its own termination, and you can see the parameter you passed to it (42).
+As you can see, `strace` reports what system calls are triggered, what parameters were passed to them, and what data they returned.
+The syntax used here for output is `system_call(parameter, parameter, parameter, ...)`.
+This syntax is borrowed from a programming language called C, but we don't have to worry about that yet.
+Just keep in mind how to read this specific syntax.
+
+In this example, `strace` reports two system calls: the second is the `exit` system call that your program uses to request its own termination, and you can see the parameter you passed to it (42).
 The first is an `execve` system call.
 We'll learn about this system call later, but it's somewhat of a yin to `exit`'s yang: it starts a new program (in this case, `your-program`).
 It's not actually invoked by `your-program` in this case: its detection by `strace` is a weird artifact of how `strace` works, that we'll investigate later.
