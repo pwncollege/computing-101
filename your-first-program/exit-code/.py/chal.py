@@ -6,6 +6,7 @@ import os
 
 allow_asm = True
 num_instructions = 3
+final_filename = "/tmp/your-program"
 
 def check_disassembly(disas):
 	assert disas[0].mnemonic == "mov" and disas[1].mnemonic == "mov", (
@@ -59,13 +60,7 @@ def success(raw_binary):
 	print("Go go go!")
 	print("\033[0m") # blank
 
-	filename = "/tmp/your-program"
-	os.rename(
-		pwnlib.asm.make_elf(raw_binary, extract=False),
-		filename
-	)
-
-	r = dramatic_command(filename)
+	r = dramatic_command(final_filename)
 	dramatic_command("echo $?", actual_command=f"echo {r}")
 	dramatic_command("")
 

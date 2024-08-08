@@ -6,6 +6,7 @@ import os
 
 allow_asm = True
 num_instructions = 2
+final_filename = "/tmp/your-program"
 
 def check_disassembly(disas):
 	operation = disas[0].mnemonic
@@ -54,15 +55,10 @@ def success(raw_binary):
 	print("Let's see what happens when you run it:")
 	print("\033[0m") # blank
 
-	filename = "/tmp/your-program"
-	os.rename(
-		pwnlib.asm.make_elf(raw_binary, extract=False),
-		filename
-	)
 	print(f"""hacker@{socket.gethostname()}:{
 		os.getcwd().replace(os.path.expanduser('~'), '~', 1)
 	}$ """, end="")
-	for c in filename:
+	for c in final_filename:
 		print(c, end="")
 		time.sleep(0.1)
 		sys.stdout.flush()

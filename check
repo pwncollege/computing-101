@@ -131,11 +131,17 @@ def main():
 			f"but you provided {len(disas)}."
 		)
 
-	if not getattr(chal, "check_raw_binary", lambda *args: True)(raw_binary):
+	if not getattr(chal, 'check_raw_binary', lambda *args: True)(raw_binary):
 		raise ChallengeFailed("Raw binary check did not succeed...")
 
-	if not getattr(chal, "check_disassembly", lambda *args: True)(disas):
+	if not getattr(chal, 'check_disassembly', lambda *args: True)(disas):
 		raise ChallengeFailed("Disassembly check did not succeed...")
+
+	elf_filename = getattr(chal, 'final_filename', "/tmp/your-program")
+	os.rename(
+		pwnlib.asm.make_elf(raw_binary, extract=False),
+		elf_filename
+	)
 
 	if os.geteuid() == 65534:
 		os.seteuid(0)
