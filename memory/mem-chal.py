@@ -2,14 +2,16 @@ import __main__ as checker
 import random
 import re
 
+from chalconf import secret_addr, secret_reg
 #pylint:disable=global-statement
 
 allow_asm = True
 give_flag = True
 returncode = None
 secret_value = random.randint(15, 255)
-from chalconf import secret_addr
 page_addr = secret_addr - secret_addr%0x1000
+num_instructions = 3
+
 assembly_prefix = f"""
     mov r9, 0x0
     mov r8, 0xffffffff
@@ -21,15 +23,25 @@ assembly_prefix = f"""
     syscall
 	mov byte ptr [{secret_addr}], {secret_value}
 """
-num_instructions = 3
+if secret_reg:
+	assembly_prefix += f"mov {secret_reg}, {secret_addr}\n"
 
-check_runtime_prologue = """
+if secret_reg:
+	check_runtime_prologue = """
+\033[92mLet's check what your exit code is! It should be our secret
+value pointed to by {secret_reg} (value {secret_value}) to succeed!
+
+Go go go!
+\033[0m
+	""".strip()
+else:
+	check_runtime_prologue = """
 \033[92mLet's check what your exit code is! It should be our secret
 value stored at memory address {secret_addr} (value {secret_value}) to succeed!
 
 Go go go!
 \033[0m
-""".strip()
+	""".strip()
 
 check_runtime_success = """
 \033[92m
@@ -39,11 +51,18 @@ performed your first memory read. Great job!
 \033[0m
 """.strip()
 
-check_runtime_failure = f"""
+if secret_reg:
+	check_runtime_failure = f"""
+\033[0;31m
+Your program exited with the wrong error code. Please make sure
+to move the memory pointed to by {secret_reg} into 'rdi'.
+	""".strip()
+else:
+	check_runtime_failure = f"""
 \033[0;31m
 Your program exited with the wrong error code. Please make sure
 to move the memory at address {secret_addr} into 'rdi'.
-""".strip()
+	""".strip()
 
 def check_disassembly(disas):
 	assert disas[0].mnemonic == "mov" and disas[1].mnemonic == "mov", (
@@ -74,10 +93,16 @@ def check_disassembly(disas):
 		"syntax to do this. In this case, I've stored the secret value at the\n"
 		f"ADDRESS of {secret_addr}."
 	)
-	assert re.match(r"qword ptr \[\w+\]", rdi_opnd), (
-		f"In this level, please use the address {secret_addr} directly for the memory address.\n"
-		"We will learn more advanced ways of addressing memory later."
-	)
+	if secret_reg:
+		assert re.match(r"qword ptr \[\w+\]", rdi_opnd), (
+			f"In this level, please dereference the register {secret_reg} to use the\n"
+			"memory address stored there."
+		)
+	else:
+		assert re.match(r"qword ptr \[\w+\]", rdi_opnd), (
+			f"In this level, please use the address {secret_addr} directly for the memory address.\n"
+			"We will learn more advanced ways of addressing memory later."
+		)
 
 
 	operation = disas[2].mnemonic
@@ -90,6 +115,7 @@ def check_disassembly(disas):
 
 def check_runtime(filename):
 	global returncode
+	#pylint:disable=c-extension-no-member
 	returncode = checker.dramatic_command(filename)
 	checker.dramatic_command("echo $?", actual_command=f"echo {returncode}")
 	checker.dramatic_command("")

@@ -1,2 +1,2 @@
 secret_addr = 123400
-recret_reg = None
+secret_reg = None
