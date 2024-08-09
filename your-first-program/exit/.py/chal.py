@@ -1,12 +1,12 @@
-import pwnlib.asm
 import socket
 import time
 import sys
 import os
 
+import __main__ as checker
+
 allow_asm = True
 num_instructions = 2
-final_filename = "/tmp/your-program"
 
 def check_disassembly(disas):
 	operation = disas[0].mnemonic
@@ -46,32 +46,22 @@ def check_disassembly(disas):
 
 	return True
 
-def success(raw_binary):
-	print("\033[92m", end='') # green
-	print("Okay, now you have written your first COMPLETE program!")
-	print("All it'll do is exit, but it'll do so cleanly, and we can")
-	print("build from there!")
-	print("")
-	print("Let's see what happens when you run it:")
-	print("\033[0m") # blank
+def check_runtime(filename):
+	checker.dramatic_command(filename)
+	checker.dramatic_command("")
 
-	print(f"""hacker@{socket.gethostname()}:{
-		os.getcwd().replace(os.path.expanduser('~'), '~', 1)
-	}$ """, end="")
-	for c in final_filename:
-		print(c, end="")
-		time.sleep(0.1)
-		sys.stdout.flush()
-	print("")
-	time.sleep(0.5)
-	print(f"""hacker@{socket.gethostname()}:{
-		os.getcwd().replace(os.path.expanduser('~'), '~', 1)
-	}$ """)
-	time.sleep(0.5)
+check_runtime_prologue = """
+\033[92mOkay, now you have written your first COMPLETE program!
+All it'll do is exit, but it'll do so cleanly, and we can
+build from there!
 
-	print("\033[92m") # green
-	print("Neat! Your program exited cleanly! Let's push on to make things")
-	print("more interesting! Take this with you:")
-	print("\033[0m") # blank
-	#pylint:disable=consider-using-with,unspecified-encoding
-	print(open("/flag").read())
+Let's see what happens when you run it:
+\033[0m
+""".strip()
+
+check_runtime_success = """
+\033[92m
+Neat! Your program exited cleanly! Let's push on to make things
+more interesting! Take this with you:
+\033[0m
+""".strip()
