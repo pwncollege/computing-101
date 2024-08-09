@@ -2,6 +2,7 @@ import __main__ as checker
 
 allow_asm = True
 num_instructions = 1
+give_flag = True
 
 def check_disassembly(disas):
 	operation = disas[0].mnemonic
