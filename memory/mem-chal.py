@@ -2,7 +2,7 @@ import __main__ as checker
 import random
 import re
 
-import chalconf
+import chalconf #pylint:disable=import-error
 secret_addr = getattr(chalconf, 'secret_addr', None)
 known_addr = getattr(chalconf, 'known_addr', None)
 secret_reg = getattr(chalconf, 'secret_reg', None)
@@ -72,23 +72,24 @@ to move the memory at address {secret_addr} into 'rdi'.
 	""".strip()
 
 def check_disassembly(disas):
-	assert disas[0].mnemonic == "mov" and disas[1].mnemonic == "mov", (
-		"Your first two instructions must be 'mov' instructions: one to\n"
-		"move a value from memory into rdi, and one to move a value into rax.\n"
-	)
+	if num_instructions == 3:
+		assert disas[0].mnemonic == "mov" and disas[1].mnemonic == "mov", (
+			"Your first two instructions must be 'mov' instructions: one to\n"
+			"move a value from memory into rdi, and one to move a value into rax.\n"
+		)
 
-	opnds1 = disas[0].op_str.split(", ")
-	opnds2 = disas[1].op_str.split(", ")
-	regs, srcs = zip(opnds1, opnds2)
+	mov_operands = [ d.op_str.split(", ") for d in disas if d.mnemonic == 'mov' ]
+
+	regs, srcs = zip(*mov_operands)
 	assert set(regs) == { 'rax', 'rdi' }, (
 		"You must set both the rax register and the rdi register!"
 	)
 
-	assert ( ['rax','0x3c'] in [ opnds1, opnds2 ] ), (
+	assert ( ['rax','0x3c'] in mov_operands ), (
 		"You must properly set the 'exit' system call number (60 in rax)!"
 	)
 
-	rdi_opnd = opnds1[1] if opnds2[0] == 'rax' else opnds2[1]
+	last_rdi_opnd = [ mo[1] for mo in mov_operands if mo[0] == 'rdi' ][-1]
 
 	assert (not secret_reg) or not (regs[0] == secret_reg and secret_reg not in srcs[0]), (
 		f"Uh oh! It looks like you're overwriting the value in {regs[0]} in your\n"
@@ -98,23 +99,23 @@ def check_disassembly(disas):
 
 	)
 
-	assert rdi_opnd != hex(secret_addr), (
+	assert last_rdi_opnd != hex(secret_addr), (
 		f"You are moving the value {secret_addr} into rdi, not the data stored at the memory\n"
 		f"addressed by the address {secret_addr}! Please use the [ADDRESS] syntax to denote\n"
 		f"the actual memory address (in this case, ADDRESS should be {secret_addr})."
 	)
-	assert rdi_opnd.startswith("qword ptr ["), (
+	assert last_rdi_opnd.startswith("qword ptr ["), (
 		"You are not moving a value from memory to rdi. You must use the '[ADDRESS]'\n"
 		"syntax to do this. In this case, I've stored the secret value at the\n"
 		f"ADDRESS of {secret_addr}."
 	)
 	if secret_reg:
-		assert re.match(r"qword ptr \[\w+\]", rdi_opnd), (
+		assert re.match(r"qword ptr \[\w+\]", last_rdi_opnd), (
 			f"In this level, please dereference the register {secret_reg} to use the\n"
 			"memory address stored there."
 		)
 	else:
-		assert re.match(r"qword ptr \[\w+\]", rdi_opnd), (
+		assert re.match(r"qword ptr \[\w+\]", last_rdi_opnd), (
 			f"In this level, please use the address {secret_addr} directly for the memory address.\n"
 			"We will learn more advanced ways of addressing memory later."
 		)
