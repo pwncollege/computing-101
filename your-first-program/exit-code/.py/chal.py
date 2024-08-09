@@ -1,12 +1,33 @@
-import pwnlib.asm
-import socket
-import time
-import sys
-import os
+import __main__ as checker
+
+#pylint:disable=global-statement
 
 allow_asm = True
 num_instructions = 3
-final_filename = "/tmp/your-program"
+give_flag = True
+returncode = None
+
+check_runtime_prologue = """
+\033[92mLet's check what your exit code is! It should be 42 to succeed!")
+
+Go go go!
+\033[0m
+""".strip()
+
+check_runtime_success = """
+\033[92m
+Neat! Your program exited with the correct error code! But what
+if it hadn't? Next, we'll learn about some simple debugging.
+For now, take this with you:
+
+\033[0m
+""".strip()
+
+check_runtime_failure = """
+\033[0;31m
+Your program exited with the wrong error code. Please make sure
+to set 'dil' to 42 (you exited with '{returncode}')!\033[0m
+""".strip()
 
 def check_disassembly(disas):
 	assert disas[0].mnemonic == "mov" and disas[1].mnemonic == "mov", (
@@ -16,7 +37,7 @@ def check_disassembly(disas):
 
 	opnds1 = disas[0].op_str.split(", ")
 	opnds2 = disas[1].op_str.split(", ")
-	regs, vals = zip(opnds1, opnds2)
+	regs, _ = zip(opnds1, opnds2)
 	assert set(regs) == { 'al', 'dil' }, (
 		"You must set both the al register and the dil register!"
 	)
@@ -33,49 +54,9 @@ def check_disassembly(disas):
 
 	return True
 
-def print_prompt():
-	print(f"""hacker@{socket.gethostname()}:{
-		os.getcwd().replace(os.path.expanduser('~'), '~', 1)
-	}$ """, end="", flush=True)
-
-def slow_print(what):
-	for c in what:
-		print(c, end="", flush=True)
-		time.sleep(0.1)
-	print("")
-
-def dramatic_command(command, actual_command=None):
-	print_prompt()
-	slow_print(command)
-	exit_code = os.WEXITSTATUS(
-		os.system(command if actual_command is None else actual_command)
-	)
-	time.sleep(0.5)
-	return exit_code
-
-def success(raw_binary):
-	print("\033[92m", end='') # green
-	print("Let's check what your exit code is! It should be 42 to succeed!")
-	print("")
-	print("Go go go!")
-	print("\033[0m") # blank
-
-	r = dramatic_command(final_filename)
-	dramatic_command("echo $?", actual_command=f"echo {r}")
-	dramatic_command("")
-
-	if r == 42:
-		print("\033[92m") # green
-		print("Neat! Your program exited with the correct error code! But what")
-		print("if it hadn't? Next, we'll learn about some simple debugging.")
-		print("For now, take this with you:")
-
-		print("\033[0m", end="") # blank
-		#pylint:disable=consider-using-with,unspecified-encoding
-		print(open("/flag").read())
-	else:
-		print('\033[0;31m') # red
-		print("Your program exited with the wrong error code. Please make sure")
-		print(f"to set 'dil' to 42 (you exited with '{r}'!")
-		print("\033[0m", end="") # blank
-
+def check_runtime(filename):
+	global returncode
+	returncode = checker.dramatic_command(filename)
+	checker.dramatic_command("echo $?", actual_command=f"echo {returncode}")
+	checker.dramatic_command("")
+	assert returncode == 42
