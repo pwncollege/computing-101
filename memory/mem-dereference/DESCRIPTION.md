@@ -17,5 +17,9 @@ When we use `rax` in lieu of directly specifying the address that it stores to a
 In the above example, we _dereference_ `rax` to load the data it points to into `rdi`.
 Neat!
 
+This also drives home another point: these registers are _general purpose_!
+Just because we've been using `rax` as the syscall index in our challenges so far doesn't mean that it can't have other uses as well.
+Here, it's used as a pointer to our secret data in memory.
+
 In this challenge, we've initialized `rax` to contain the address of the secret data we've stored in memory.
 Dereference `rax` to the secret data into `rdi` and use it as the exit code of the program to get the flag!

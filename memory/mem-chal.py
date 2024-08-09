@@ -83,7 +83,7 @@ def check_disassembly(disas):
 
 	rdi_opnd = opnds1[1] if opnds2[0] == 'rax' else opnds2[1]
 
-	assert (not secret_reg) or regs[0] != secret_reg, (
+	assert (not secret_reg) or not (regs[0] == secret_reg and secret_reg not in srcs[0]), (
 		f"Uh oh! It looks like you're overwriting the value in {regs[0]} in your\n"
 		"first instruction. Once you overwrite this value, you will lose the secret\n"
 		"address that we initialized it with! Dereference it first before overwriting\n"
