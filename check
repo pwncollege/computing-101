@@ -13,7 +13,7 @@ import os
 pwnlib.context.context.arch = "amd64"
 cs = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_64)
 
-sys.path.append("/challenge/.py")
+sys.path.append(os.path.dirname(__file__)+"/.py")
 import chal #pylint:disable=import-error,wrong-import-position
 
 if os.geteuid() == 0:

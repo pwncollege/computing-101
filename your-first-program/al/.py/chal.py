@@ -1,3 +1,5 @@
+import __main__ as checker
+
 allow_asm = True
 num_instructions = 1
 
@@ -32,12 +34,18 @@ def check_disassembly(disas):
 
 	return True
 
-check_disassembly_success = """
+def check_runtime(filename):
+	checker.dramatic_command(filename)
+	checker.dramatic_command("")
+
+check_runtime_prologue = """
 \033[92m
 Congratulations, you have written your first program!
 Now let's see what happens when you run it:
 \033[0m
-Segmentation fault
+""".strip()
+
+check_runtime_success = """
 \033[92m
 ... uh oh. The program crashed! We'll go into more details about
 what a Segmentation Fault is later, but in this case, the program
