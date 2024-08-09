@@ -72,7 +72,7 @@ def check_disassembly(disas):
 
 	opnds1 = disas[0].op_str.split(", ")
 	opnds2 = disas[1].op_str.split(", ")
-	regs, _ = zip(opnds1, opnds2)
+	regs, srcs = zip(opnds1, opnds2)
 	assert set(regs) == { 'rax', 'rdi' }, (
 		"You must set both the rax register and the rdi register!"
 	)
@@ -82,6 +82,14 @@ def check_disassembly(disas):
 	)
 
 	rdi_opnd = opnds1[1] if opnds2[0] == 'rax' else opnds2[1]
+
+	assert (not secret_reg) or regs[0] != secret_reg, (
+		f"Uh oh! It looks like you're overwriting the value in {regs[0]} in your\n"
+		"first instruction. Once you overwrite this value, you will lose the secret\n"
+		"address that we initialized it with! Dereference it first before overwriting\n"
+		"it.\n"
+
+	)
 
 	assert rdi_opnd != hex(secret_addr), (
 		f"You are moving the value {secret_addr} into rdi, not the data stored at the memory\n"
