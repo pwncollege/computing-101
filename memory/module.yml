@@ -13,3 +13,5 @@ resources:
 challenges:
 - id: mem-load
   name: "Loading From Memory"
+- id: mem-load-2
+  name: "More Loading Practice"

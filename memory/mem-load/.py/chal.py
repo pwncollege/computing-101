@@ -8,14 +8,15 @@ allow_asm = True
 give_flag = True
 returncode = None
 secret_value = random.randint(15, 255)
-secret_addr = 133700
+from chalconf import secret_addr
+page_addr = secret_addr - secret_addr%0x1000
 assembly_prefix = f"""
     mov r9, 0x0
     mov r8, 0xffffffff
     mov r10, 0x32
     mov rdx, 0x3
     mov rsi, 0x1000
-    mov rdi, 131072
+    mov rdi, {page_addr}
     mov rax, 9
     syscall
 	mov byte ptr [{secret_addr}], {secret_value}
