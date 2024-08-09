@@ -3,3 +3,4 @@ type: public
 id: computing-101
 modules:
 - id: your-first-program
+- id: memory

@@ -8,7 +8,7 @@ give_flag = True
 returncode = None
 
 check_runtime_prologue = """
-\033[92mLet's check what your exit code is! It should be 42 to succeed!")
+\033[92mLet's check what your exit code is! It should be 42 to succeed!
 
 Go go go!
 \033[0m

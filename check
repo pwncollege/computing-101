@@ -2,6 +2,7 @@
 
 import pwnlib.context
 import pwnlib.asm
+import contextlib
 import capstone
 import tempfile
 import socket
@@ -42,6 +43,18 @@ def dramatic_command(command, actual_command=None):
 	time.sleep(0.5)
 	return exit_code
 
+@contextlib.contextmanager
+def disable_fd(fd):
+	bkup = os.dup(fd)
+	os.close(fd)
+	yield
+	os.dup2(bkup, fd)
+	os.close(bkup)
+
+def _assemble(asm):
+	with disable_fd(2):
+		return pwnlib.asm.asm(asm)
+
 def assemble(asm):
 	if not getattr(chal, "allow_asm", False):
 		raise ChallengeFailed(
@@ -50,11 +63,7 @@ def assemble(asm):
 		)
 
 	try:
-		bkup = os.dup(2)
-		os.close(2)
-		x86 = pwnlib.asm.asm(asm)
-		os.dup2(bkup, 2)
-		os.close(bkup)
+		x86 = _assemble(asm)
 	except pwnlib.exception.PwnlibException as e:
 		errors = e.message.split("\n")
 		if (
@@ -113,22 +122,17 @@ def get_raw_binary(content):
 	else: #assuming this is binary code
 		return content
 
-def success(raw_binary): #pylint:disable=unused-argument
-	print("SUCCESS! Congratulations, here is your flag:")
- 	#pylint:disable=consider-using-with,unspecified-encoding
-	print(open("/flag").read())
-
 def do_check(stage_id, stage_description, *args, **kwargs):
 	try:
 		if not hasattr(chal, stage_id):
-			return
+			return None
 
 		print(getattr(chal, stage_id+"_prologue", f"{stage_description}...").format(**chal.__dict__))
 		r = getattr(chal, stage_id)(*args, **kwargs)
-		print(getattr(chal, stage_id+"_success", f"... YES! Great job!").format(**chal.__dict__))
+		print(getattr(chal, stage_id+"_success", "... YES! Great job!").format(**chal.__dict__))
 		return r
 	except (ChallengeFailed, AssertionError) as _e:
-		print(getattr(chal, stage_id+"_failure", f"... oops, we found an issue! Details below:").format(**chal.__dict__))
+		print(getattr(chal, stage_id+"_failure", "... oops, we found an issue! Details below:\n").format(**chal.__dict__))
 		print(_e)
 		raise
 
@@ -170,6 +174,13 @@ def main():
 			f"but you provided {len(disas)}."
 		)
 		return
+
+	if hasattr(chal, "assembly_prefix"):
+		binary_prefix = _assemble(chal.assembly_prefix)
+		raw_binary = binary_prefix + raw_binary
+	if hasattr(chal, "assembly_suffix"):
+		binary_prefix = _assemble(chal.assembly_suffix)
+		raw_binary = raw_binary + binary_suffix
 
 	do_check("check_raw_binary", "Checking the binary code", raw_binary)
 	do_check("check_disassembly", "Checking the assembly code", disas)
