@@ -15,7 +15,6 @@ give_flag = True
 returncode = None
 
 secret_value = random.randint(15, 255)
-page_addr = secret_addr - secret_addr%0x1000
 
 assembly_prefix = f"""
     mov r9, 0x0
@@ -23,7 +22,7 @@ assembly_prefix = f"""
     mov r10, 0x32
     mov rdx, 0x3
     mov rsi, 0x1000
-    mov rdi, {page_addr}
+    mov rdi, {secret_addr-secret_addr%0x1000}
     mov rax, 9
     syscall
 	mov byte ptr [{secret_addr}], {secret_value}
@@ -31,7 +30,17 @@ assembly_prefix = f"""
 if secret_reg:
 	assembly_prefix += f"mov {secret_reg}, {secret_addr}\n"
 if known_addr:
-	assembly_prefix += f"mov qword ptr [{known_addr}], {secret_addr}\n"
+	assembly_prefix += f"""
+    	mov r9, 0x0
+    	mov r8, 0xffffffff
+    	mov r10, 0x32
+    	mov rdx, 0x3
+    	mov rsi, 0x1000
+    	mov rdi, {known_addr-known_addr%0x1000}
+    	mov rax, 9
+    	syscall
+		mov qword ptr [{known_addr}], {secret_addr}\n
+	"""
 
 if secret_reg:
 	check_runtime_prologue = """
@@ -68,7 +77,7 @@ else:
 	check_runtime_failure = f"""
 \033[0;31m
 Your program exited with the wrong error code. Please make sure
-to move the memory at address {secret_addr} into 'rdi'.
+to move the value at memory address {secret_addr} into 'rdi'.
 	""".strip()
 
 def check_disassembly(disas):
@@ -80,7 +89,7 @@ def check_disassembly(disas):
 
 	mov_operands = [ d.op_str.split(", ") for d in disas if d.mnemonic == 'mov' ]
 
-	regs, srcs = zip(*mov_operands)
+	regs, _ = zip(*mov_operands)
 	assert set(regs) == { 'rax', 'rdi' }, (
 		"You must set both the rax register and the rdi register!"
 	)
@@ -91,13 +100,34 @@ def check_disassembly(disas):
 
 	last_rdi_opnd = [ mo[1] for mo in mov_operands if mo[0] == 'rdi' ][-1]
 
-	assert (not secret_reg) or not (regs[0] == secret_reg and secret_reg not in srcs[0]), (
-		f"Uh oh! It looks like you're overwriting the value in {regs[0]} in your\n"
-		"first instruction. Once you overwrite this value, you will lose the secret\n"
-		"address that we initialized it with! Dereference it first before overwriting\n"
-		"it.\n"
-
+	assert mov_operands.index(['rax','0x3c']) == max(
+		i for i,m in enumerate(mov_operands) if m[0] == 'rax'
+	), (
+		"Uh oh! It looks like you're overwriting exit's syscall index (in rax) after\n"
+		"setting it. If you overwrite it, then your eventual syscall instruction will\n"
+		"trigger the wrong system call!"
 	)
+
+	if secret_reg:
+		try:
+			idx_deref = max(i for i,m in enumerate(mov_operands) if secret_reg in m[1] and "[" in m[1])
+		except ValueError as e:
+			raise AssertionError(
+				"It looks like you never dereference the register with the secret\n"
+				f"address ({secret_reg})! You need to dereference it to read the\n"
+				"required exit code!"
+			) from e
+
+		try:
+			earliest_overwrite = min(i for i,m in enumerate(mov_operands) if m[0] == secret_reg)
+			assert earliest_overwrite >= idx_deref, (
+				f"Uh oh! It looks like you're overwriting the address in {secret_reg} before\n"
+				"dereferncing it. Once you overwrite this value, you will lose the secret\n"
+				"address that we initialized it with! Dereference it first before overwriting\n"
+				"it.\n"
+			)
+		except ValueError:
+			pass
 
 	assert last_rdi_opnd != hex(secret_addr), (
 		f"You are moving the value {secret_addr} into rdi, not the data stored at the memory\n"
@@ -121,7 +151,7 @@ def check_disassembly(disas):
 		)
 
 
-	operation = disas[2].mnemonic
+	operation = disas[-1].mnemonic
 	assert operation == "syscall", (
 		"Your last instruction should be the 'syscall' instruction to invoke\n"
 		f"the exit system call, but you used the '{operation}' instruction!"

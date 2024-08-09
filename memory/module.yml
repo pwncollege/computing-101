@@ -19,3 +19,5 @@ challenges:
   name: "Dereferencing Pointers"
 - id: mem-dereference-self
   name: "Dereferencing Yourself"
+- id: mem-stored-addr
+  name: "Stored Addresses"

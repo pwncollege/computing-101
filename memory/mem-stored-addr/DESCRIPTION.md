@@ -18,6 +18,6 @@ Addresses and data are stored, loaded, moved around, and, sometimes, mixed up wi
 When that happens, security issues can arise, and you'll romp through many such issues during your pwn.college journey.
 
 For now, let's practice dereferencing an address stored in memory.
-I'll store a secret value at a secret address, then store that secret address at the address `55500`.
+I'll store a secret value at a secret address, then store that secret address at the address `567800`.
 You must read the address, dereference it, get the secret value, and then `exit` with it as the exit code.
 You got this!

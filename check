@@ -31,7 +31,8 @@ def print_prompt():
 def slow_print(what):
 	for c in what:
 		print(c, end="", flush=True)
-		time.sleep(0.05)
+		if "FAST" not in os.environ:
+			time.sleep(0.05)
 	print("")
 
 def dramatic_command(command, actual_command=None):
@@ -40,7 +41,8 @@ def dramatic_command(command, actual_command=None):
 	exit_code = os.WEXITSTATUS(
 		os.system(command if actual_command is None else actual_command)
 	)
-	time.sleep(0.5)
+	if "FAST" not in os.environ:
+		time.sleep(0.5)
 	return exit_code
 
 @contextlib.contextmanager
