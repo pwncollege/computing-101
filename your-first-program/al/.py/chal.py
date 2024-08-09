@@ -32,21 +32,20 @@ def check_disassembly(disas):
 
 	return True
 
-def success(raw_binary):
-	print("\033[92m", end='') # green
-	print("Congratulations, you have written your first program!")
-	print("Now let's see what happens when you run it:")
-	print("\033[0m") # blank
-	print("Segmentation fault")
-	print("\033[92m") # green
-	print("... uh oh. The program crashed! We'll go into more details about")
-	print("what a Segmentation Fault is later, but in this case, the program")
-	print("crashed because, after the CPU moved the value 60 into al, it was")
-	print("never instructed to stop execution. With no further instructions")
-	print("to execute, and no directive to stop, it crashed.")
-	print("")
-	print("In the next level, we'll learn about how to stop program execution.")
-	print("For now, here is your flag for your first (crashing) program!")
-	print("\033[0m") # blank
-	#pylint:disable=consider-using-with,unspecified-encoding
-	print(open("/flag").read())
+check_disassembly_success = """
+\033[92m
+Congratulations, you have written your first program!
+Now let's see what happens when you run it:
+\033[0m
+Segmentation fault
+\033[92m
+... uh oh. The program crashed! We'll go into more details about
+what a Segmentation Fault is later, but in this case, the program
+crashed because, after the CPU moved the value 60 into al, it was
+never instructed to stop execution. With no further instructions
+to execute, and no directive to stop, it crashed.
+
+In the next level, we'll learn about how to stop program execution.
+For now, here is your flag for your first (crashing) program!
+\033[0m
+""".strip()
