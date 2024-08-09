@@ -21,7 +21,7 @@ resources:
     playlist: PL-ymxv0nOtqox6nF4HXtXHnTQFGkRQU_2
     slides: 1U8Rsz7FNTmy-3wGtPB-YCyanIIbox1J90adze9-1cfo
 challenges:
-- id: al
+- id: rax
   name: "Your First Register"
 - id: exit
   name: "Your First Syscall"

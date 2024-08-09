@@ -26,24 +26,24 @@ For now, take this with you:
 check_runtime_failure = """
 \033[0;31m
 Your program exited with the wrong error code. Please make sure
-to set 'dil' to 42 (you exited with '{returncode}')!\033[0m
+to set 'rdi' to 42 (you exited with '{returncode}')!\033[0m
 """.strip()
 
 def check_disassembly(disas):
 	assert disas[0].mnemonic == "mov" and disas[1].mnemonic == "mov", (
 		"Your first two instructions must be 'mov' instructions: one to\n"
-		"move a value into dil, and one to move a value into al.\n"
+		"move a value into rdi, and one to move a value into rax.\n"
 	)
 
 	opnds1 = disas[0].op_str.split(", ")
 	opnds2 = disas[1].op_str.split(", ")
 	regs, _ = zip(opnds1, opnds2)
-	assert set(regs) == { 'al', 'dil' }, (
-		"You must set both the al register and the dil register!"
+	assert set(regs) == { 'rax', 'rdi' }, (
+		"You must set both the rax register and the rdi register!"
 	)
 
-	assert ( ['al','0x3c'] in [ opnds1, opnds2 ] ), (
-		"You must properly set the 'exit' system call number (60 in al)!"
+	assert ( ['rax','0x3c'] in [ opnds1, opnds2 ] ), (
+		"You must properly set the 'exit' system call number (60 in rax)!"
 	)
 
 	operation = disas[2].mnemonic
