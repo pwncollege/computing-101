@@ -1,1 +1,1 @@
-../../mem-load/.py/chal.py
+../../mem-chal.py
