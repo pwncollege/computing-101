@@ -13,3 +13,5 @@ resources:
 challenges:
 - id: mem-load
   name: "Loading From Memory"
+  visibility:
+    start: "2029-11-08T22:00:00-00:00"
