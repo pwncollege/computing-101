@@ -15,3 +15,5 @@ challenges:
   name: "Loading From Memory"
 - id: mem-load-2
   name: "More Loading Practice"
+- id: mem-dereference
+  name: "Pointers"
