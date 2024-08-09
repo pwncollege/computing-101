@@ -21,5 +21,10 @@ This also drives home another point: these registers are _general purpose_!
 Just because we've been using `rax` as the syscall index in our challenges so far doesn't mean that it can't have other uses as well.
 Here, it's used as a pointer to our secret data in memory.
 
+Similarly, the _data_ in the registers doesn't have an implicit purpose.
+If `rax` contains the value `133700` and we write `mov rdi, [rax]`, the CPU uses the value as a memory address to dereference.
+But if we write `mov rdi, rax` in the same conditions, the CPU just happily puts `133700` into `rdi`.
+To the CPU, data is data; it only becomes differentiated when it's used in different ways.
+
 In this challenge, we've initialized `rax` to contain the address of the secret data we've stored in memory.
 Dereference `rax` to the secret data into `rdi` and use it as the exit code of the program to get the flag!

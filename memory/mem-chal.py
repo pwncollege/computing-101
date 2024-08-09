@@ -2,15 +2,20 @@ import __main__ as checker
 import random
 import re
 
-from chalconf import secret_addr, secret_reg
+import chalconf
+secret_addr = getattr(chalconf, 'secret_addr', None)
+known_addr = getattr(chalconf, 'known_addr', None)
+secret_reg = getattr(chalconf, 'secret_reg', None)
+num_instructions = getattr(chalconf, 'num_instructions', 3)
+
 #pylint:disable=global-statement
 
 allow_asm = True
 give_flag = True
 returncode = None
+
 secret_value = random.randint(15, 255)
 page_addr = secret_addr - secret_addr%0x1000
-num_instructions = 3
 
 assembly_prefix = f"""
     mov r9, 0x0
@@ -25,6 +30,8 @@ assembly_prefix = f"""
 """
 if secret_reg:
 	assembly_prefix += f"mov {secret_reg}, {secret_addr}\n"
+if known_addr:
+	assembly_prefix += f"mov qword ptr [{known_addr}], {secret_addr}\n"
 
 if secret_reg:
 	check_runtime_prologue = """
