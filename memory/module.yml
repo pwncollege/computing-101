@@ -21,3 +21,5 @@ challenges:
   name: "Dereferencing Yourself"
 - id: mem-stored-addr
   name: "Stored Addresses"
+- id: mem-double-deref
+  name: "Double Dereference"
