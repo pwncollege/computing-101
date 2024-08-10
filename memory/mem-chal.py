@@ -3,8 +3,8 @@ import random
 import re
 
 import chalconf #pylint:disable=import-error
-secret_addr = getattr(chalconf, 'secret_addr', None)
-known_addr = getattr(chalconf, 'known_addr', None)
+addr_chain = getattr(chalconf, 'addr_chain', None)
+secret_addr = addr_chain[-1]
 secret_reg = getattr(chalconf, 'secret_reg', None)
 num_instructions = getattr(chalconf, 'num_instructions', 3)
 
@@ -16,69 +16,49 @@ returncode = None
 
 secret_value = random.randint(15, 255)
 
-assembly_prefix = f"""
-    mov r9, 0x0
-    mov r8, 0xffffffff
-    mov r10, 0x32
-    mov rdx, 0x3
-    mov rsi, 0x1000
-    mov rdi, {secret_addr-secret_addr%0x1000}
-    mov rax, 9
-    syscall
-	mov byte ptr [{secret_addr}], {secret_value}
-"""
+assembly_prefix = ""
+mapped_pages = set()
+for n,_addr in enumerate(addr_chain):
+	_page = _addr - _addr%0x1000
+	assembly_prefix += "mov r9, 0x0; mov r8, 0xffffffff; mov r10, 0x32; mov rdx, 0x3; mov rsi, 0x1000;"
+	assembly_prefix += f"mov rdi, {_page}; mov rax, 9; syscall;\n"
+	try:
+		assembly_prefix += f"mov qword ptr [{_addr}], {addr_chain[n+1]}\n"
+	except IndexError:
+		assembly_prefix += f"mov qword ptr [{_addr}], {secret_value}\n"
+
 if secret_reg:
 	assembly_prefix += f"mov {secret_reg}, {secret_addr}\n"
-if known_addr:
-	assembly_prefix += f"""
-    	mov r9, 0x0
-    	mov r8, 0xffffffff
-    	mov r10, 0x32
-    	mov rdx, 0x3
-    	mov rsi, 0x1000
-    	mov rdi, {known_addr-known_addr%0x1000}
-    	mov rax, 9
-    	syscall
-		mov qword ptr [{known_addr}], {secret_addr}\n
-	"""
 
-if secret_reg:
+if secret_reg and len(addr_chain) == 1:
 	check_runtime_prologue = """
-\033[92mLet's check what your exit code is! It should be our secret
+Let's check what your exit code is! It should be our secret
 value pointed to by {secret_reg} (value {secret_value}) to succeed!
-
-Go go go!
-\033[0m
+	""".strip()
+elif secret_reg:
+	check_runtime_prologue = """
+Let's check what your exit code is! It should be our secret
+value pointed to by a chain of pointers starting at {secret_reg}!
+	""".strip()
+elif len(addr_chain) == 1:
+	check_runtime_prologue = """
+Let's check what your exit code is! It should be our secret value
+stored at memory address {secret_addr} (value {secret_value}) to succeed!
 	""".strip()
 else:
 	check_runtime_prologue = """
-\033[92mLet's check what your exit code is! It should be our secret
-value stored at memory address {secret_addr} (value {secret_value}) to succeed!
-
-Go go go!
-\033[0m
+Let's check what your exit code is! It should be our secret
+value pointed to by a chain of pointers starting at address {secret_addr}!
 	""".strip()
 
 check_runtime_success = """
-\033[92m
 Neat! Your program exited with the correct error code! You have
 performed your first memory read. Great job!
-
-\033[0m
 """.strip()
 
-if secret_reg:
-	check_runtime_failure = f"""
-\033[0;31m
-Your program exited with the wrong error code. Please make sure
-to move the memory pointed to by {secret_reg} into 'rdi'.
-	""".strip()
-else:
-	check_runtime_failure = f"""
-\033[0;31m
-Your program exited with the wrong error code. Please make sure
-to move the value at memory address {secret_addr} into 'rdi'.
-	""".strip()
+check_runtime_failure = f"""
+Your program exited with the wrong error code...
+""".strip()
 
 def check_disassembly(disas):
 	if num_instructions == 3:
@@ -129,25 +109,21 @@ def check_disassembly(disas):
 		except ValueError:
 			pass
 
-	assert last_rdi_opnd != hex(secret_addr), (
-		f"You are moving the value {secret_addr} into rdi, not the data stored at the memory\n"
-		f"addressed by the address {secret_addr}! Please use the [ADDRESS] syntax to denote\n"
-		f"the actual memory address (in this case, ADDRESS should be {secret_addr})."
-	)
-	assert last_rdi_opnd.startswith("qword ptr ["), (
-		"You are not moving a value from memory to rdi. You must use the '[ADDRESS]'\n"
-		"syntax to do this. In this case, I've stored the secret value at the\n"
-		f"ADDRESS of {secret_addr}."
-	)
 	if secret_reg:
 		assert re.match(r"qword ptr \[\w+\]", last_rdi_opnd), (
 			f"In this level, please dereference the register {secret_reg} to use the\n"
 			"memory address stored there."
 		)
 	else:
-		assert re.match(r"qword ptr \[\w+\]", last_rdi_opnd), (
-			f"In this level, please use the address {secret_addr} directly for the memory address.\n"
-			"We will learn more advanced ways of addressing memory later."
+		assert last_rdi_opnd != hex(addr_chain[0]), (
+			f"You are moving the value {addr_chain[0]} into rdi, not the data stored at the memory\n"
+			f"addressed by the address {addr_chain[0]}! Please use the [ADDRESS] syntax to denote\n"
+			f"the actual memory address (in this case, ADDRESS should be {addr_chain[0]})."
+		)
+		assert last_rdi_opnd.startswith("qword ptr ["), (
+			"You are not moving a value from memory to rdi. You must use the '[ADDRESS]'\n"
+			"syntax to do this. In this case, I've stored the secret value at the\n"
+			f"ADDRESS of {addr_chain[0]}."
 		)
 
 
@@ -162,7 +138,12 @@ def check_disassembly(disas):
 def check_runtime(filename):
 	global returncode
 	#pylint:disable=c-extension-no-member
-	returncode = checker.dramatic_command(filename)
-	checker.dramatic_command("echo $?", actual_command=f"echo {returncode}")
-	checker.dramatic_command("")
-	assert returncode == secret_value
+
+	try:
+		print("")
+		returncode = checker.dramatic_command(filename)
+		checker.dramatic_command("echo $?", actual_command=f"echo {returncode}")
+		assert returncode == secret_value
+	finally:
+		checker.dramatic_command("")
+		print("")

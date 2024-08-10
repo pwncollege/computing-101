@@ -124,18 +124,41 @@ def get_raw_binary(content):
 	else: #assuming this is binary code
 		return content
 
+@contextlib.contextmanager
+def output_color(color, stream=sys.stdout):
+	CODES = {
+		'HEADER': '\033[95m',
+		'OKBLUE': '\033[94m',
+		'OKCYAN': '\033[96m',
+		'OKGREEN': '\033[92m',
+		'WARNING': '\033[93m',
+		'FAIL': '\033[91m',
+		'ENDC': '\033[0m',
+		'BOLD': '\033[1m',
+		'UNDERLINE': '\033[4m',
+	}
+	print(CODES[color.upper()], end="", flush=True, file=stream)
+	try:
+		yield
+	finally:
+		print(CODES['ENDC'], end="", flush=True, file=stream)
+
 def do_check(stage_id, stage_description, *args, **kwargs):
 	try:
 		if not hasattr(chal, stage_id):
 			return None
 
-		print(getattr(chal, stage_id+"_prologue", f"{stage_description}...").format(**chal.__dict__))
+		print("")
+		with output_color("header"):
+			print(getattr(chal, stage_id+"_prologue", f"{stage_description}...").format(**chal.__dict__))
 		r = getattr(chal, stage_id)(*args, **kwargs)
-		print(getattr(chal, stage_id+"_success", "... YES! Great job!").format(**chal.__dict__))
+		with output_color("okgreen"):
+			print(getattr(chal, stage_id+"_success", "... YES! Great job!").format(**chal.__dict__))
 		return r
 	except (ChallengeFailed, AssertionError) as _e:
-		print(getattr(chal, stage_id+"_failure", "... oops, we found an issue! Details below:\n").format(**chal.__dict__))
-		print(_e)
+		with output_color("fail"):
+			print(getattr(chal, stage_id+"_failure", "... oops, we found an issue! Details below:\n").format(**chal.__dict__))
+			print(_e)
 		raise
 
 def main():
@@ -199,6 +222,7 @@ def main():
 	do_check("check_runtime", "Checking runtime behavior", elf_filename)
 
 	if getattr(chal, "give_flag", False):
+		print("")
 		print("Here is your flag!")
 		#pylint:disable=consider-using-with,unspecified-encoding
 		print(open("/flag").read())
@@ -213,3 +237,4 @@ if __name__ == '__main__':
 	except Exception as _e: #pylint:disable=broad-exception-caught
 		print("Unexpected error during challenge evaluation! The error:")
 		print(_e)
+		raise
