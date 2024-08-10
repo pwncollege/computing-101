@@ -28,7 +28,7 @@ for n,_addr in enumerate(addr_chain):
 		assembly_prefix += f"mov qword ptr [{_addr}], {secret_value}\n"
 
 if secret_reg:
-	assembly_prefix += f"mov {secret_reg}, {secret_addr}\n"
+	assembly_prefix += f"mov {secret_reg}, {addr_chain[0]}\n"
 
 if secret_reg and len(addr_chain) == 1:
 	check_runtime_prologue = """
@@ -78,8 +78,6 @@ def check_disassembly(disas):
 		"You must properly set the 'exit' system call number (60 in rax)!"
 	)
 
-	last_rdi_opnd = [ mo[1] for mo in mov_operands if mo[0] == 'rdi' ][-1]
-
 	assert mov_operands.index(['rax','0x3c']) == max(
 		i for i,m in enumerate(mov_operands) if m[0] == 'rax'
 	), (
@@ -99,8 +97,8 @@ def check_disassembly(disas):
 			) from e
 
 		try:
-			earliest_overwrite = min(i for i,m in enumerate(mov_operands) if m[0] == secret_reg)
-			assert earliest_overwrite >= idx_deref, (
+			earliest_nonderef_overwrite = min(i for i,m in enumerate(mov_operands) if m[0] == secret_reg and "[" not in m[1])
+			assert earliest_nonderef_overwrite >= idx_deref, (
 				f"Uh oh! It looks like you're overwriting the address in {secret_reg} before\n"
 				"dereferncing it. Once you overwrite this value, you will lose the secret\n"
 				"address that we initialized it with! Dereference it first before overwriting\n"
@@ -109,23 +107,35 @@ def check_disassembly(disas):
 		except ValueError:
 			pass
 
-	if secret_reg:
-		assert re.match(r"qword ptr \[\w+\]", last_rdi_opnd), (
-			f"In this level, please dereference the register {secret_reg} to use the\n"
-			"memory address stored there."
-		)
-	else:
-		assert last_rdi_opnd != hex(addr_chain[0]), (
-			f"You are moving the value {addr_chain[0]} into rdi, not the data stored at the memory\n"
-			f"addressed by the address {addr_chain[0]}! Please use the [ADDRESS] syntax to denote\n"
-			f"the actual memory address (in this case, ADDRESS should be {addr_chain[0]})."
-		)
-		assert last_rdi_opnd.startswith("qword ptr ["), (
-			"You are not moving a value from memory to rdi. You must use the '[ADDRESS]'\n"
-			"syntax to do this. In this case, I've stored the secret value at the\n"
-			f"ADDRESS of {addr_chain[0]}."
-		)
+	all_derefs = [ m for m in mov_operands if "[" in m[1] ]
+	for r,s in mov_operands:
+		if r == 'rax' and s == hex(60):
+			continue
 
+		if len(all_derefs) == len(addr_chain):
+			continue
+
+		if '[' not in s and s.startswith("0x"):
+			raise AssertionError(
+				f"In the line 'mov {r}, {int(s,16)}', you are moving the _value_ {int(s,16)} into\n"
+				f"{r}, rather than reading memory at the address {int(s,16)}. To read memory,\n"
+				f"you must enclose the value in [], such as: [{int(s,16)}]."
+			)
+		if '[' not in s and re.match(r"[a-zA-Z]*", s):
+			raise AssertionError(
+				f"In the line 'mov {r}, {s}', you are moving the _value_ in register\n"
+				f"{s} into {r}, rather than reading memory at the address pointed to by\n"
+				"{s}. To read memory, you must enclose the register in [], such as: [{s}]."
+			)
+
+	#first_str = f"dereference {secret_reg}" if secret_reg else f"load memory from {addr_chain[0]}"
+	#assert len(all_derefs) == len(addr_chain), (
+	#	f"To retrieve the secret value in this level, you must do {len(all_derefs)}\n"
+	#	"memory reads! First, " + first_str + "and then dereference the\n"
+	#	f"loaded value {len(addr_chain)-1} times!\n"
+	#) if len(addr_chain) > 1 else (
+	#	f"To retrieve the secret value in this level, you must\n"+first_str+"!"
+	#)
 
 	operation = disas[-1].mnemonic
 	assert operation == "syscall", (
