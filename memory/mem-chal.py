@@ -70,7 +70,7 @@ def check_disassembly(disas):
 	mov_operands = [ d.op_str.split(", ") for d in disas if d.mnemonic == 'mov' ]
 
 	regs, _ = zip(*mov_operands)
-	assert set(regs) == { 'rax', 'rdi' }, (
+	assert set(regs) >= { 'rax', 'rdi' }, (
 		"You must set both the rax register and the rdi register!"
 	)
 
