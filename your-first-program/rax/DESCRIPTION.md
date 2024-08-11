@@ -20,7 +20,7 @@ Instructions are specified as an _operator_ (in this case, `mov`), and _operands
 For example, if you wanted to store the value `1337` into `rax`, the x86 Assembly would look like:
 
 ```assembly
-mov al, 1337
+mov rax, 1337
 ```
 
 You can see a few things:
