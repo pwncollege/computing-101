@@ -29,7 +29,7 @@ Now, what you have is the following situation:
                        │
  Register | Contents   │
 +--------------------+ │
-| rdi     | 133700   |─╯
+| rdi     | 133700   |─┘
 +--------------------+
 ```
 
