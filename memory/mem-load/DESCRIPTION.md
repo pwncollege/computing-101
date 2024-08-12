@@ -15,7 +15,17 @@ After this, the value of `rdi` is `31337`.
 Cool.
 Well, we can use the same instruction to access memory!
 There is another format of the command that, instead, uses the second parameter as an address to access memory!
-It is:
+Consider that our memory looks like this:
+
+```none
++--------------------+
+| Address | Contents |
++--------------------+
+| 31337   | 42       |
++--------------------+
+```
+
+To access the memory contents at memory address 31337, you would can do:
 
 ```assembly
 mov rdi, [31337]
@@ -24,10 +34,20 @@ mov rdi, [31337]
 When the CPU executes this instruction, it of course understands that `31337` is an _address_, not a raw value.
 If you think of the instruction as a person telling the CPU what to do, and we stick with our "houses on a street" analogy, then instead of just handing the CPU data, the instruction/person _points at a house on the street_.
 The CPU will then go to that address, ring its doorbell, open its front door, drag the data that's in there out, and put it into `rdi`.
-Thus, the `31338` in this context is the _memory address_ and serves to _point to_ the data stored at that memory address.
+Thus, the `31337` in this context is the _memory address_ and serves to _point to_ the data stored at that memory address.
+After this instruction executes, the value stored in `rdi` will be `42`!
 
 Let's put this into practice!
-I've stored a secret number at memory address `133700`.
+I've stored a secret number at memory address `133700`, as so:
+
+```none
++--------------------+
+| Address | Contents |
++--------------------+
+| 133700  | ???      |
++--------------------+
+```
+
 You must retrieve this secret number and use it as the exit code for your program.
 To do this, you must read it into `rdi`, whose value, if you recall, is the first parameter to `exit` and is used as the exit code.
 Good luck!
