@@ -18,8 +18,7 @@ There is another format of the command that, instead, uses the second parameter 
 Consider that our memory looks like this:
 
 ```none
-+--------------------+
-| Address | Contents |
+  Address | Contents
 +--------------------+
 | 31337   | 42       |
 +--------------------+
@@ -41,8 +40,7 @@ Let's put this into practice!
 I've stored a secret number at memory address `133700`, as so:
 
 ```none
-+--------------------+
-| Address | Contents |
+  Address | Contents
 +--------------------+
 | 133700  | ???      |
 +--------------------+
