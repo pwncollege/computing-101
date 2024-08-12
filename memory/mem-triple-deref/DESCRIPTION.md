@@ -2,7 +2,7 @@ Okay, let's stretch that to one more depth!
 We've added an additional level of indirection in this challenge, so now you'll need *three* dereferences to find the secret value.
 Something like this:
 
-```none
+```text
      Address | Contents
    +--------------------+
  ┌─| 133700  | 123400   |◂──┐

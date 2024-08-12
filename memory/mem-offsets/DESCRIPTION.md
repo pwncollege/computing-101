@@ -4,7 +4,7 @@ Sometimes, for example, a pointer might point to a collection of data (say, an e
 
 For example, if your pointer (say, `rdi`) points to a sequence of numbers in memory, as so:
 
-```none
+```text
   Address | Contents
 +--------------------+
 | 133700  | 50       |◂┐
@@ -35,7 +35,7 @@ Let's practice this concept.
 As before, we will initialize `rax` (note: not `rdi` unlike the example!) to point at the secret value, but not _directly_ at it.
 This time, the secret value will have an offset of 8 bytes from where `rax` points, something analogous to this:
 
-```none
+```text
   Address | Contents
 +--------------------+
 | 31337   | 0        |◂┐

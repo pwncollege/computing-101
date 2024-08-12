@@ -1,7 +1,7 @@
 You look like you need just a tiny bit more practice.
 In this level, we put the secret value at `123400` instead of `133700`, as so:
 
-```none
+```text
   Address | Contents
 +--------------------+
 | 123400  | ???      |

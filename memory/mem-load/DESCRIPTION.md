@@ -17,7 +17,7 @@ Well, we can use the same instruction to access memory!
 There is another format of the command that, instead, uses the second parameter as an address to access memory!
 Consider that our memory looks like this:
 
-```none
+```text
   Address | Contents
 +--------------------+
 | 31337   | 42       |
@@ -39,7 +39,7 @@ After this instruction executes, the value stored in `rdi` will be `42`!
 Let's put this into practice!
 I've stored a secret number at memory address `133700`, as so:
 
-```none
+```text
   Address | Contents
 +--------------------+
 | 133700  | ???      |

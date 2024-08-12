@@ -6,7 +6,7 @@ How is this possible?
 Well, typically, memory addresses are stored in registers, and we use the values in the registers to point to data in memory!
 Let's start with this memory configuration:
 
-```none
+```text
   Address | Contents
 +--------------------+
 | 133700  | 42       |
@@ -21,7 +21,7 @@ mov rdi, 133700
 
 Now, what you have is the following situation:
 
-```none
+```text
   Address | Contents
 +--------------------+
 | 133700  | 42       |◂┐

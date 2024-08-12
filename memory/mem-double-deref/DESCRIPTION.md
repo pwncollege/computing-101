@@ -9,7 +9,7 @@ In this challenge, we stored our `SECRET_VALUE` in memory at the address `SECRET
 Then, we put `SECRET_ADDRESS_2` into `rax`!
 The result looks something like this, using `133700` for `SECRET_LOCATION_1` and 123400 for `SECRET_LOCATION_2` (not, in the real challenge, these values will be different and hidden from you!):
 
-```none
+```text
      Address | Contents
    +--------------------+
  ┌─| 133700  | 123400   |◂┐
