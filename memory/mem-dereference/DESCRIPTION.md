@@ -24,7 +24,7 @@ Now, what you have is the following situation:
 ```none
   Address | Contents
 +--------------------+
-| 133700  | 42       |🮤╮
+| 133700  | 42       |🠄╮
 +--------------------+ │
                        │
  Register | Contents   │
