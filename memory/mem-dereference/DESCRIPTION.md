@@ -4,17 +4,27 @@ In fact, in most cases, you don't deal with actual memory addresses when writing
 
 How is this possible?
 Well, typically, memory addresses are stored in registers, and we use the values in the registers to point to data in memory!
-Consider this snippet:
+Let's start with this memory configuration:
+
+```none
+  Address | Contents
++--------------------+
+| 133700  | 42       |
++--------------------+
+```
+
+And consider this assembly snippet:
 
 ```assembly
+mov rdi, 133700
 mov rdi, [rax]
 ```
 
 How interesting!
-Here, we are accessing memory, but instead of specifying a fixed address like `133700`, we're using the value stored in `rax` as the memory address.
+Here, we are accessing memory, but instead of specifying a fixed address like `133700` during the dereference, we're using the value stored in `rax` as the memory address.
 By containing the memory address, `rax` is a _pointer_ that _points to_ the data we want to access!
 When we use `rax` in lieu of directly specifying the address that it stores to access the memory address that it references, we call this _dereferencing_ the pointer.
-In the above example, we _dereference_ `rax` to load the data it points to into `rdi`.
+In the above example, we _dereference_ `rax` to load the data it points to (the value `42` at address `133700`) into `rdi`.
 Neat!
 
 This also drives home another point: these registers are _general purpose_!
