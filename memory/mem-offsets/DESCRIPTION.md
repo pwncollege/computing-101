@@ -7,7 +7,7 @@ For example, if your pointer (say, `rdi`) points to a sequence of numbers in mem
 ```none
   Address | Contents
 +--------------------+
-| 133700  | 50       |🭮╮
+| 133700  | 50       |🭮┐
 | 133701  | 42       | │
 | 133702  | 99       | │
 | 133703  | 14       | │
@@ -15,7 +15,7 @@ For example, if your pointer (say, `rdi`) points to a sequence of numbers in mem
                        │
  Register | Contents   │
 +--------------------+ │
-| rdi     | 133700   |─╯
+| rdi     | 133700   |─┘
 +--------------------+
 ```
 
@@ -38,7 +38,7 @@ This time, the secret value will have an offset of 8 bytes from where `rax` poin
 ```none
   Address | Contents
 +--------------------+
-| 31337   | 0        |🭮╮
+| 31337   | 0        |🭮┐
 | 31337+1 | 0        | │
 | 31337+2 | 0        | │
 | 31337+3 | 0        | │
@@ -51,7 +51,7 @@ This time, the secret value will have an offset of 8 bytes from where `rax` poin
                        │
  Register | Contents   │
 +--------------------+ │
-| rdi     | 31337    |─╯
+| rdi     | 31337    |─┘
 +--------------------+
 ```
 
