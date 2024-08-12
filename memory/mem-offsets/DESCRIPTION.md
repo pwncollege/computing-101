@@ -7,7 +7,7 @@ For example, if your pointer (say, `rdi`) points to a sequence of numbers in mem
 ```none
   Address | Contents
 +--------------------+
-| 133700  | 50       |🭮┐
+| 133700  | 50       |◂┐
 | 133701  | 42       | │
 | 133702  | 99       | │
 | 133703  | 14       | │
