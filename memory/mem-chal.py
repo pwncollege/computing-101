@@ -6,6 +6,7 @@ import chalconf #pylint:disable=import-error
 addr_chain = getattr(chalconf, 'addr_chain', None)
 secret_addr = addr_chain[-1]
 secret_reg = getattr(chalconf, 'secret_reg', None)
+value_offset = getattr(chalconf, 'value_offset', 0)
 num_instructions = getattr(chalconf, 'num_instructions', 3)
 
 #pylint:disable=global-statement
@@ -25,7 +26,7 @@ for n,_addr in enumerate(addr_chain):
 	try:
 		assembly_prefix += f"mov qword ptr [{_addr}], {addr_chain[n+1]}\n"
 	except IndexError:
-		assembly_prefix += f"mov qword ptr [{_addr}], {secret_value}\n"
+		assembly_prefix += f"mov qword ptr [{_addr+value_offset}], {secret_value}\n"
 
 if secret_reg:
 	assembly_prefix += f"mov {secret_reg}, {addr_chain[0]}\n"

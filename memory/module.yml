@@ -19,6 +19,8 @@ challenges:
   name: "Dereferencing Pointers"
 - id: mem-dereference-self
   name: "Dereferencing Yourself"
+- id: mem-offsets
+  name: "Dereferencing with Offsets"
 - id: mem-stored-addr
   name: "Stored Addresses"
 - id: mem-double-deref
