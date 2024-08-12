@@ -17,6 +17,26 @@ And consider this assembly snippet:
 
 ```assembly
 mov rdi, 133700
+```
+
+Now, what you have is the following situation:
+
+```none
+  Address | Contents
++--------------------+
+| 133700  | 42       | 🭮╮
++--------------------+  │
+                        │
+ Register | Contents    │
++--------------------+  │
+| rdi     | 133700   | ─╯
++--------------------+
+```
+
+Here, `rdi` now holds a value that corresponds with the address of the data that want to load!
+No, we load it:
+
+```assembly
 mov rdi, [rax]
 ```
 
