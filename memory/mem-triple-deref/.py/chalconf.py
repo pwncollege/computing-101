@@ -7,3 +7,5 @@ addr_chain = [
 ]
 secret_reg = 'rax'
 num_instructions = 5
+must_set_regs = [ "rax", "rdi" ]
+final_reg_vals = { "rax": 60 }

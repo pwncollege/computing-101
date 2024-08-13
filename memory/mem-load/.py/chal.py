@@ -1,1 +1,1 @@
-../../mem-chal.py
+../../../secret-value-checker.py

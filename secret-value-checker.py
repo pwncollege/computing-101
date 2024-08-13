@@ -8,6 +8,8 @@ secret_addr = addr_chain[-1]
 secret_reg = getattr(chalconf, 'secret_reg', None)
 value_offset = getattr(chalconf, 'value_offset', 0)
 num_instructions = getattr(chalconf, 'num_instructions', 3)
+final_reg_vals = getattr(chalconf, 'final_reg_vals', {})
+must_set_regs = getattr(chalconf, 'must_set_regs', [])
 
 #pylint:disable=global-statement
 
@@ -57,27 +59,29 @@ Neat! Your program exited with the correct error code! You have
 performed your first memory read. Great job!
 """.strip()
 
-check_runtime_failure = f"""
+check_runtime_failure = """
 Your program exited with the wrong error code...
 """.strip()
 
 def check_disassembly(disas):
-	if num_instructions == 3:
-		assert disas[0].mnemonic == "mov" and disas[1].mnemonic == "mov", (
-			"Your first two instructions must be 'mov' instructions: one to\n"
-			"move a value from memory into rdi, and one to move a value into rax.\n"
-		)
-
 	mov_operands = [ d.op_str.split(", ") for d in disas if d.mnemonic == 'mov' ]
 
 	regs, _ = zip(*mov_operands)
-	assert set(regs) >= { 'rax', 'rdi' }, (
-		"You must set both the rax register and the rdi register!"
+	assert set(regs) >= set(must_set_regs), (
+		"You must set each of the following registers (using the mov instruction):\n    "+", ".join(regs)
 	)
 
-	assert ( ['rax','0x3c'] in mov_operands ), (
-		"You must properly set the 'exit' system call number (60 in rax)!"
-	)
+	for r,v in final_reg_vals.items():
+		assert ( [r,hex(v)] in mov_operands ), (
+			f"You must properly set register {r} to the value {v}!"
+		)
+		last_mov_rax = max(i for i,m in enumerate(mov_operands) if m[0] == r)
+		last_val_set = len(mov_operands) - mov_operands[::-1].index([r, hex(v)]) - 1
+		assert last_mov_rax <= last_val_set, (
+			f"You are overwriting the required value ({v}) that you need to put\n"
+			"into 'rax'. You can use 'rax' for other stuff, but make sure to move\n"
+			f"{v} into it afterwards!"
+		)
 
 	assert mov_operands.index(['rax','0x3c']) == max(
 		i for i,m in enumerate(mov_operands) if m[0] == 'rax'
