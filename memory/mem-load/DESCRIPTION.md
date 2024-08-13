@@ -18,10 +18,10 @@ There is another format of the command that, instead, uses the second parameter 
 Consider that our memory looks like this:
 
 ```text
-  Address | Contents
-+--------------------+
-| 31337   | 42       |
-+--------------------+
+  Address │ Contents
++────────────────────+
+│ 31337   │ 42       │
++────────────────────+
 ```
 
 To access the memory contents at memory address 31337, you would can do:
@@ -40,10 +40,10 @@ Let's put this into practice!
 I've stored a secret number at memory address `133700`, as so:
 
 ```text
-  Address | Contents
-+--------------------+
-| 133700  | ???      |
-+--------------------+
+  Address │ Contents
++────────────────────+
+│ 133700  │ ???      │
++────────────────────+
 ```
 
 You must retrieve this secret number and use it as the exit code for your program.

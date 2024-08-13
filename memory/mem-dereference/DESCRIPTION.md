@@ -7,10 +7,10 @@ Well, typically, memory addresses are stored in registers, and we use the values
 Let's start with this memory configuration:
 
 ```text
-  Address | Contents
-+--------------------+
-| 133700  | 42       |
-+--------------------+
+  Address │ Contents
++────────────────────+
+│ 133700  │ 42       │
++────────────────────+
 ```
 
 And consider this assembly snippet:
@@ -22,15 +22,15 @@ mov rdi, 133700
 Now, what you have is the following situation:
 
 ```text
-  Address | Contents
-+--------------------+
-| 133700  | 42       |◂┐
-+--------------------+ │
+  Address │ Contents
++────────────────────+
+│ 133700  │ 42       │◂┐
++────────────────────+ │
                        │
- Register | Contents   │
-+--------------------+ │
-| rdi     | 133700   |─┘
-+--------------------+
+ Register │ Contents   │
++────────────────────+ │
+│ rdi     │ 133700   │─┘
++────────────────────+
 ```
 
 Here, `rdi` now holds a value that corresponds with the address of the data that want to load!
