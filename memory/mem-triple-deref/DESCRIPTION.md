@@ -19,5 +19,5 @@ Something like this:
    +────────────────────+
 ```
 
-As you can see, we'll place the first address that you must dereference into rax.
+As you can see, we'll place the first address that you must dereference into rdi.
 Go get the value!
