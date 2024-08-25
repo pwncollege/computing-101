@@ -8,3 +8,5 @@ resources:
 challenges:
 - id: write
   name: "Writing Output"
+- id: write-exit
+  name: "Chaining Syscalls"

@@ -17,6 +17,7 @@ secret_value = getattr(chalconf, 'secret_value', random.randint(15, 255))
 secret_value_desc = getattr(chalconf, 'secret_value_desc', f"value {secret_value}")
 clean_exit = getattr(chalconf, 'clean_exit', True)
 skip_deref_checks = getattr(chalconf, 'skip_deref_checks', False)
+exit_code = getattr(chalconf, 'exit_code', secret_value)
 
 check_runtime_success = getattr(chalconf, "success_message", "Neat! Your program passed the tests! Great job!")
 
@@ -183,7 +184,7 @@ def check_runtime(filename):
 				)
 			if 'exit' in secret_checks:
 				checker.dramatic_command("echo $?", actual_command=f"echo {returncode}")
-				assert returncode == secret_value, "Your program exited with the wrong error code..."
+				assert returncode == exit_code, f"Your program exited with the wrong error code (should be {exit_code})..."
 	finally:
 		checker.dramatic_command("")
 		print("")
