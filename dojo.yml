@@ -4,3 +4,4 @@ id: computing-101
 modules:
 - id: your-first-program
 - id: memory
+- id: hello-hackers
