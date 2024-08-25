@@ -4,20 +4,21 @@ import re
 
 import chalconf #pylint:disable=import-error
 addr_chain = getattr(chalconf, 'addr_chain', None)
-secret_addr = addr_chain[-1]
 secret_addr_reg = getattr(chalconf, 'secret_addr_reg', None)
+secret_value_reg = getattr(chalconf, 'secret_value_reg', None)
 value_offset = getattr(chalconf, 'value_offset', 0)
 num_instructions = getattr(chalconf, 'num_instructions', 3)
 final_reg_vals = getattr(chalconf, 'final_reg_vals', {})
 must_set_regs = getattr(chalconf, 'must_set_regs', [])
+must_get_regs = getattr(chalconf, 'must_get_regs', [])
+secret_checks = getattr(chalconf, 'secret_checks', ['exit'])
+secret_value = getattr(chalconf, 'secret_value', random.randint(15, 255))
 
 #pylint:disable=global-statement
 
 allow_asm = True
 give_flag = True
 returncode = None
-
-secret_value = random.randint(15, 255)
 
 assembly_prefix = ""
 mapped_pages = set()
@@ -33,25 +34,33 @@ for n,_addr in enumerate(addr_chain):
 if secret_addr_reg:
 	assembly_prefix += f"mov {secret_addr_reg}, {addr_chain[0]}\n"
 
-if secret_addr_reg and len(addr_chain) == 1:
-	check_runtime_prologue = """
+if secret_value_reg:
+	assembly_prefix += f"mov {secret_value_reg}, {secret_value}\n"
+
+if secret_value_reg is not None:
+	check_runtime_prologue = f"""
+Let's check what your exit code is! It should be our secret
+value stored in register {secret_value_reg} (value {secret_value}) to succeed!
+	""".strip()
+elif secret_addr_reg and len(addr_chain) == 1:
+	check_runtime_prologue = f"""
 Let's check what your exit code is! It should be our secret
 value pointed to by {secret_addr_reg} (value {secret_value}) to succeed!
 	""".strip()
 elif secret_addr_reg:
-	check_runtime_prologue = """
+	check_runtime_prologue = f"""
 Let's check what your exit code is! It should be our secret
 value pointed to by a chain of pointers starting at {secret_addr_reg}!
 	""".strip()
 elif len(addr_chain) == 1:
-	check_runtime_prologue = """
+	check_runtime_prologue = f"""
 Let's check what your exit code is! It should be our secret value
-stored at memory address {secret_addr} (value {secret_value}) to succeed!
+stored at memory address {addr_chain[-1]} (value {secret_value}) to succeed!
 	""".strip()
 else:
-	check_runtime_prologue = """
+	check_runtime_prologue = f"""
 Let's check what your exit code is! It should be our secret
-value pointed to by a chain of pointers starting at address {secret_addr}!
+value pointed to by a chain of pointers starting at address {addr_chain[-1]}!
 	""".strip()
 
 check_runtime_success = """
@@ -66,14 +75,23 @@ Your program exited with the wrong error code...
 def check_disassembly(disas):
 	mov_operands = [ d.op_str.split(", ") for d in disas if d.mnemonic == 'mov' ]
 
-	regs, _ = zip(*mov_operands)
-	assert set(regs) >= set(must_set_regs), (
-		"You must set each of the following registers (using the mov instruction):\n    "+", ".join(regs)
+	set_regs, get_args = zip(*mov_operands)
+	assert set(set_regs) >= set(must_set_regs), (
+		"You must set each of the following registers (using the mov instruction):\n    "+", ".join(set_regs)
 	)
 
-	for r,v in final_reg_vals.items():
+	assert set(get_args) >= set(must_get_regs), (
+		"You must get values from each of the following registers (using the\nmov instruction): "+", ".join(must_get_regs)
+	)
+
+	for r,vs in final_reg_vals.items():
+		v = vs
+		s = None
+		if type(vs) in (tuple,list):
+			v,s = vs
 		assert ( [r,hex(v)] in mov_operands ), (
-			f"You must properly set register {r} to the value {v}!"
+			f"You must properly set register {r} to the value {v}" +
+			(f"\n({s})!" if s else "!")
 		)
 		last_mov_rax = max(i for i,m in enumerate(mov_operands) if m[0] == r)
 		last_val_set = len(mov_operands) - mov_operands[::-1].index([r, hex(v)]) - 1

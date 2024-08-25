@@ -43,7 +43,7 @@ Now, how do we actually specify these parameters?
 
 1. We'll pass the first parameter of a system call, as we reviewed above, in the `rdi` register.
 2. We'll pass the second parameter via the `rsi` register.
-   That's just another general purpose register, and the agreed-upon convention in Linux is that it's used as the second parameter to a system call.
+   The agreed-upon convention in Linux is that `rsi` is used as the second parameter to system calls.
 3. We'll pass the third parameter via the `rdx` register.
    This is the most confusing part of this entire module: `rdi` (the register holding the first parameter) has such a similar name to `rdx` that it's really easy to mix up and, unfortunately, the naming is this way for historic reasons and is here to stay.
    Oh well...

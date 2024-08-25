@@ -29,3 +29,5 @@ challenges:
   name: "Exit Codes"
 - id: strace
   name: "Tracing Syscalls"
+- id: movreg
+  name: "Moving Between Registers"
