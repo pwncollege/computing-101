@@ -5,7 +5,7 @@ import re
 import chalconf #pylint:disable=import-error
 addr_chain = getattr(chalconf, 'addr_chain', None)
 secret_addr = addr_chain[-1]
-secret_reg = getattr(chalconf, 'secret_reg', None)
+secret_addr_reg = getattr(chalconf, 'secret_addr_reg', None)
 value_offset = getattr(chalconf, 'value_offset', 0)
 num_instructions = getattr(chalconf, 'num_instructions', 3)
 final_reg_vals = getattr(chalconf, 'final_reg_vals', {})
@@ -30,18 +30,18 @@ for n,_addr in enumerate(addr_chain):
 	except IndexError:
 		assembly_prefix += f"mov qword ptr [{_addr+value_offset}], {secret_value}\n"
 
-if secret_reg:
-	assembly_prefix += f"mov {secret_reg}, {addr_chain[0]}\n"
+if secret_addr_reg:
+	assembly_prefix += f"mov {secret_addr_reg}, {addr_chain[0]}\n"
 
-if secret_reg and len(addr_chain) == 1:
+if secret_addr_reg and len(addr_chain) == 1:
 	check_runtime_prologue = """
 Let's check what your exit code is! It should be our secret
-value pointed to by {secret_reg} (value {secret_value}) to succeed!
+value pointed to by {secret_addr_reg} (value {secret_value}) to succeed!
 	""".strip()
-elif secret_reg:
+elif secret_addr_reg:
 	check_runtime_prologue = """
 Let's check what your exit code is! It should be our secret
-value pointed to by a chain of pointers starting at {secret_reg}!
+value pointed to by a chain of pointers starting at {secret_addr_reg}!
 	""".strip()
 elif len(addr_chain) == 1:
 	check_runtime_prologue = """
@@ -91,20 +91,20 @@ def check_disassembly(disas):
 		"trigger the wrong system call!"
 	)
 
-	if secret_reg:
+	if secret_addr_reg:
 		try:
-			idx_deref = max(i for i,m in enumerate(mov_operands) if secret_reg in m[1] and "[" in m[1])
+			idx_deref = max(i for i,m in enumerate(mov_operands) if secret_addr_reg in m[1] and "[" in m[1])
 		except ValueError as e:
 			raise AssertionError(
 				"It looks like you never dereference the register with the secret\n"
-				f"address ({secret_reg})! You need to dereference it to read the\n"
+				f"address ({secret_addr_reg})! You need to dereference it to read the\n"
 				"required exit code!"
 			) from e
 
 		try:
-			earliest_nonderef_overwrite = min(i for i,m in enumerate(mov_operands) if m[0] == secret_reg and "[" not in m[1])
+			earliest_nonderef_overwrite = min(i for i,m in enumerate(mov_operands) if m[0] == secret_addr_reg and "[" not in m[1])
 			assert earliest_nonderef_overwrite >= idx_deref, (
-				f"Uh oh! It looks like you're overwriting the address in {secret_reg} before\n"
+				f"Uh oh! It looks like you're overwriting the address in {secret_addr_reg} before\n"
 				"dereferncing it. Once you overwrite this value, you will lose the secret\n"
 				"address that we initialized it with! Dereference it first before overwriting\n"
 				"it.\n"
@@ -133,7 +133,7 @@ def check_disassembly(disas):
 				"{s}. To read memory, you must enclose the register in [], such as: [{s}]."
 			)
 
-	#first_str = f"dereference {secret_reg}" if secret_reg else f"load memory from {addr_chain[0]}"
+	#first_str = f"dereference {secret_addr_reg}" if secret_addr_reg else f"load memory from {addr_chain[0]}"
 	#assert len(all_derefs) == len(addr_chain), (
 	#	f"To retrieve the secret value in this level, you must do {len(all_derefs)}\n"
 	#	"memory reads! First, " + first_str + "and then dereference the\n"
