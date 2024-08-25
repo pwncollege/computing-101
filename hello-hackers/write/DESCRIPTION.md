@@ -32,10 +32,10 @@ In the kinda-C syntax that we learned from `strace`, this would be:
 write(file_descriptor, memory_address, number_of_characters_to_write)
 ```
 
-For a more concrete example, if you wanted to write 10 characters from memory address 133700 to standard output (file descriptor 1), this would be:
+For a more concrete example, if you wanted to write 10 characters from memory address 1337000 to standard output (file descriptor 1), this would be:
 
 ```c
-write(1, 133700, 10);
+write(1, 1337000, 10);
 ```
 
 Wow, that's simple!
@@ -57,5 +57,5 @@ Other than the `rdi` vs `rdx` confusion, this is really easy!
 Now, you know how to point a register at a memory address (from the [../memory](Memory) module!), and yo know how to set the system call number, and how to set the rest of the registers.
 So, this should be cake!
 
-Similar to before, we wrote a secret character value into memory at address `133700`.
+Similar to before, we wrote a secret character value into memory at address `1337000`.
 Call `write` to that character value onto standard out, and we'll give you the flag!
