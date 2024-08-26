@@ -4,7 +4,7 @@ Unsurprisingly, your program writes text to the screen by invoking a system call
 Specifically, this is the `write` system call, and its syscall number is `1`.
 However, the write system call also needs to specify, via its parameters, _what_ data to write and _where_ to write it to.
 
-You may remember, from the [/linux-luminarium/piping](Practicing Piping) module of the [/linux-luminarium](Linux Luminarium) dojo, the concept of _File Descriptors_ (FDs).
+You may remember, from the [Practicing Piping](/linux-luminarium/piping) module of the [Linux Luminarium](/linux-luminarium) dojo, the concept of _File Descriptors_ (FDs).
 As a reminder, each process starts out with three FDs:
 
 - **FD 0:** Standard *Input* is the channel through which the process takes input. For example, your shell uses Standard Input to read the commands that you input.
@@ -54,7 +54,7 @@ Now, how do we actually specify these parameters?
 And, of course, the `write` syscall index into `rax` itself: `1`.
 Other than the `rdi` vs `rdx` confusion, this is really easy!
 
-Now, you know how to point a register at a memory address (from the [../memory](Memory) module!), and yo know how to set the system call number, and how to set the rest of the registers.
+Now, you know how to point a register at a memory address (from the [Memory](../memory) module!), and yo know how to set the system call number, and how to set the rest of the registers.
 So, this should be cake!
 
 Similar to before, we wrote a secret character value into memory at address `1337000`.
