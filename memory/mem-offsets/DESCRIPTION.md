@@ -32,8 +32,8 @@ The above example is accessing memory 1 byte after the memory address pointed to
 In memory terms, we call this 1 byte difference an _offset_, so in this example, there is an offset of 1 from the address pointed to by `rdi`.
 
 Let's practice this concept.
-As before, we will initialize `rax` (note: not `rdi` unlike the example!) to point at the secret value, but not _directly_ at it.
-This time, the secret value will have an offset of 8 bytes from where `rax` points, something analogous to this:
+As before, we will initialize `rdi` to point at the secret value, but not _directly_ at it.
+This time, the secret value will have an offset of 8 bytes from where `rdi` points, something analogous to this:
 
 ```text
   Address │ Contents
