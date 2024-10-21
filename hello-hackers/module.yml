@@ -10,3 +10,5 @@ challenges:
   name: "Writing Output"
 - id: write-exit
   name: "Chaining Syscalls"
+- id: hello-hackers
+  name: "Writing Strings"

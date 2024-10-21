@@ -1,6 +1,7 @@
 import __main__ as checker
 import random
 import struct
+import time
 import re
 
 import chalconf #pylint:disable=import-error
@@ -36,7 +37,13 @@ for n,_addr in enumerate(addr_chain):
 	try:
 		assembly_prefix += f"mov qword ptr [{_addr}], {addr_chain[n+1]}\n"
 	except IndexError:
-		assembly_prefix += f"mov qword ptr [{_addr+value_offset}], {secret_value}\n"
+		if type(secret_value) is int:
+			assembly_prefix += f"mov qword ptr [{_addr+value_offset}], {secret_value}\n"
+		elif type(secret_value) is bytes:
+			for i,sb in enumerate(secret_value):
+				assembly_prefix += f"mov qword ptr [{_addr+value_offset+i}], {sb}\n"
+		else:
+			raise AssertionError("unexpected type for secret_value. Contact professors.") #pylint:disable=raise-missing-from
 
 if secret_addr_reg:
 	assembly_prefix += f"mov {secret_addr_reg}, {addr_chain[0]}\n"
@@ -175,12 +182,18 @@ def check_runtime(filename):
 	try:
 		print("")
 		returncode = checker.dramatic_command(filename, actual_command = f"bash -c 'exec {filename} 2> >(tee /tmp/stderr 2>&1) > >(tee /tmp/stdout)'")
+		time.sleep(0.1)
 		for c in secret_checks:
 			if c in ["stdout", "stderr"]:
 				actual_bytes = open(f"/tmp/{c}", "rb").read() #pylint:disable=consider-using-with,unspecified-encoding
-				expected_bytes = struct.pack("<Q", secret_value).rstrip(b"\0")
+				if type(secret_value) is int:
+					expected_bytes = struct.pack("<Q", secret_value).rstrip(b"\0")
+				elif type(secret_value) is bytes:
+					expected_bytes = secret_value
+				else:
+					raise AssertionError("unexpected type for secret_value. Contact professors.")
 				assert expected_bytes == actual_bytes, (
-					f"The value you wrote to {c} does not match the secret value!"
+					f"The value you wrote to {c} ({actual_bytes}) does not match the secret value ({expected_bytes})!"
 				)
 			if 'exit' in secret_checks:
 				checker.dramatic_command("echo $?", actual_command=f"echo {returncode}")
