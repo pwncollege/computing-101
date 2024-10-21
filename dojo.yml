@@ -5,3 +5,6 @@ modules:
 - id: your-first-program
 - id: memory
 - id: hello-hackers
+- id: assembly-crash-course
+- id: debugging-refresher
+- id: building-a-web-server
