@@ -1,0 +1,144 @@
+name: Assembly Crash Course
+challenges:
+- id: level-1
+  name: level1
+  description: Set a register
+- id: level-2-a
+  name: level2
+  description: Set multiple registers
+- id: level-2
+  name: level3
+  description: Addition
+- id: level-3
+  name: level4
+  description: Multiplication
+- id: level-4
+  name: level5
+  description: Division
+- id: level-5
+  name: level6
+  description: Modulus
+- id: level-6-a
+  name: level7
+  description: Register sizes
+- id: level-6
+  name: level8
+  description: Register sizes for modulus
+- id: level-7
+  name: level9
+  description: Bitwise shift
+- id: level-8
+  name: level10
+  description: Bitwise and
+- id: level-9
+  name: level11
+  description: Bitwise logic
+- id: level-10-a
+  name: level12
+  description: Memory reads
+- id: level-10-b
+  name: level13
+  description: Memory writes
+- id: level-10
+  name: level14
+  description: Memory reads and writes
+- id: level-11-a
+  name: level15
+  description: Read one size data
+- id: level-11
+  name: level16
+  description: Read multiple data sizes
+- id: level-12
+  name: level17
+  description: Dynamic address memory writes
+- id: level-13
+  name: level18
+  description: Consecutive memory reads
+- id: level-14
+  name: level19
+  description: The stack
+- id: level-15
+  name: level20
+  description: Swap register values with the stack
+- id: level-16
+  name: level21
+  description: Memory reads and writes with the stack
+- id: level-17-a
+  name: level22
+  description: Absolute jump
+- id: level-17-b
+  name: level23
+  description: Relative jump
+- id: level-17
+  name: level24
+  description: Control flow
+- id: level-18
+  name: level25
+  description: Conditional branches
+- id: level-19
+  name: level26
+  description: Jump tables
+- id: level-20
+  name: level27
+  description: Computing averages
+- id: level-21
+  name: level28
+  description: Implementing strlen
+- id: level-22
+  name: level29
+  description: Using library functions
+- id: level-23
+  name: level30
+  description: Compute the most common byte
+resources:
+- name: "Assembly Crash Course: Computer Architecture"
+  type: lecture
+  video: o_kSgUPJk4c
+  playlist: PL-ymxv0nOtqox6nF4HXtXHnTQFGkRQU_2
+  slides: 1sVyPL92gbzg_it9aIeC-CjXtF2tpvAmZTKjWc-SlU0c
+- name: "Assembly Crash Course: Assembly"
+  type: lecture
+  video: TdTOH1GfrWg
+  playlist: PL-ymxv0nOtqox6nF4HXtXHnTQFGkRQU_2
+  slides: 1sBB34ZUVjT3MDjYvGiZU3z6CTLGvO1hHEdHliPUJ0iw
+- name: "Assembly Crash Course: Data"
+  type: lecture
+  video: 21MvbpgssU8
+  playlist: PL-ymxv0nOtqox6nF4HXtXHnTQFGkRQU_2
+  slides: 1SeyZbM_qCDz4t03KDZ8Q0qi1GzsSSSJAkO-KeVlAL7w
+- name: "Assembly Crash Course: Registers"
+  type: lecture
+  video: IWbIZerH930
+  playlist: PL-ymxv0nOtqox6nF4HXtXHnTQFGkRQU_2
+  slides: 1U8Rsz7FNTmy-3wGtPB-YCyanIIbox1J90adze9-1cfo
+- name: "Assembly Crash Course: Memory"
+  type: lecture
+  video: HahXfnOsSUU
+  playlist: PL-ymxv0nOtqox6nF4HXtXHnTQFGkRQU_2
+  slides: 1lbPbd-jLj7VS7M-ntGhpv4_8WqSfqzLBNWG68_BIRL0
+- name: "Assembly Crash Course: Control Flow"
+  type: lecture
+  video: 0a8NlF7z7Ro
+  playlist: PL-ymxv0nOtqox6nF4HXtXHnTQFGkRQU_2
+  slides: 1wX5TH6DQjXw4GJo_T6I9GF7bhC689T52HSHaMUCmj1E
+- name: "Assembly Crash Course: System Calls"
+  type: lecture
+  video: vspq0u2tvhU
+  playlist: PL-ymxv0nOtqox6nF4HXtXHnTQFGkRQU_2
+  slides: 1vEuZ1PW8Wvm88INmWbjoKY8srEKSkv2g4o-V42BsN9Y
+- name: "Assembly Crash Course: Building Programs"
+  type: lecture
+  video: IITocH-WGH4
+  playlist: PL-ymxv0nOtqox6nF4HXtXHnTQFGkRQU_2
+  slides: 1Y35BuIvvG8k3txjcsMXjygzsP7rDaNpbDHz3TMO91Fo
+- name: Further Reading
+  type: markdown
+  content: |
+    - An awesome intro series that covers some of the fundamentals from [LiveOverflow](https://www.youtube.com/watch?v=iyAyN3GFM7A&list=PLhixgUqwRTjxglIswKp9mpkfPNfHkzyeN&index=1).
+    - A [`Ike: The Systems Hacking Handbook](https://ike.mahaloz.re/1_introduction/introduction.html), an excellent guide to Computer Organization.
+    - A [comprehensive assembly tutorial](https://github.com/mytechnotalent/Reverse-Engineering-Tutorial) for several architectures (amd64 is the relevant one here).
+    - The course ["Architecture 1001: x86-64 Assembly"](https://ost2.fyi/Arch1001) from OpenSecurityTraining2.
+    - A whole [x86_64 assembly book](https://open.umn.edu/opentextbooks/textbooks/733) to help you out!
+    - A [game](https://squallygame.com/) to teach you x86 assembly and one to [stress test your knowledge](https://oooverflow.io/zero-is-you/)!
+    - A [flowchart](https://soc.me/interfaces/x86-prefixes-and-escape-opcodes-flowchart) of x86 prefix and escape opcodes.
+    - An unofficial, but extremely detailed and useful [x86 reference](https://www.felixcloutier.com/x86/).
