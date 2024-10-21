@@ -1,0 +1,42 @@
+name: Debugging Refresher
+challenges:
+- id: level-1
+  name: level1
+  description: ""
+- id: level-2
+  name: level2
+  description: ""
+- id: level-3
+  name: level3
+  description: ""
+- id: level-4
+  name: level4
+  description: ""
+- id: level-5
+  name: level5
+  description: ""
+- id: level-6
+  name: level6
+  description: ""
+- id: level-7
+  name: level7
+  description: ""
+- id: level-8
+  name: level8
+  description: ""
+resources:
+- name: Robert's GDB Walkthrough
+  type: lecture
+  video: r185fCzdw8Y
+  playlist: PL-ymxv0nOtqqQzEncNuE6jetlJAiBUda-
+- name: GDB Help
+  type: markdown
+  content: |
+    There are a number of good gdb crash courses / reference manuals:
+
+    - [GDB's documentation](https://sourceware.org/gdb/onlinedocs/gdb/index.html)
+    - [Tudor's gdb crash course](https://users.umiacs.umd.edu/~tdumitra/courses/ENEE757/Fall15/misc/gdb_tutorial.html)
+    - [gdb debugging full example](https://www.brendangregg.com/blog/2016-08-09/gdb-example-ncurses.html)
+    - [pwndbg: a gdb extension (feature list)](https://github.com/pwndbg/pwndbg/blob/dev/FEATURES.md)
+    - [gef: another gdb extension (feature list)](https://hugsy.github.io/gef/commands/aliases/)
+    - The course [Debuggers 1012: Introductory GDB](https://ost2.fyi/Dbg1012) from OpenSecurityTraining2.
