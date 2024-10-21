@@ -2,7 +2,7 @@ name: Computing 101
 type: public
 id: computing-101
 award:
-  emoji: 🖥️
+  emoji: 💻
 modules:
 - id: your-first-program
 - id: memory
