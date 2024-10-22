@@ -91,42 +91,42 @@ challenges:
   name: level30
   description: Compute the most common byte
 resources:
-- name: "Assembly Crash Course: Computer Architecture"
+- name: "(review) Computer Architecture"
   type: lecture
   video: o_kSgUPJk4c
   playlist: PL-ymxv0nOtqox6nF4HXtXHnTQFGkRQU_2
   slides: 1sVyPL92gbzg_it9aIeC-CjXtF2tpvAmZTKjWc-SlU0c
-- name: "Assembly Crash Course: Assembly"
+- name: "(review) Assembly"
   type: lecture
   video: TdTOH1GfrWg
   playlist: PL-ymxv0nOtqox6nF4HXtXHnTQFGkRQU_2
   slides: 1sBB34ZUVjT3MDjYvGiZU3z6CTLGvO1hHEdHliPUJ0iw
-- name: "Assembly Crash Course: Data"
+- name: "(review) Data"
   type: lecture
   video: 21MvbpgssU8
   playlist: PL-ymxv0nOtqox6nF4HXtXHnTQFGkRQU_2
   slides: 1SeyZbM_qCDz4t03KDZ8Q0qi1GzsSSSJAkO-KeVlAL7w
-- name: "Assembly Crash Course: Registers"
+- name: "(review) Registers"
   type: lecture
   video: IWbIZerH930
   playlist: PL-ymxv0nOtqox6nF4HXtXHnTQFGkRQU_2
   slides: 1U8Rsz7FNTmy-3wGtPB-YCyanIIbox1J90adze9-1cfo
-- name: "Assembly Crash Course: Memory"
+- name: "(review) Memory"
   type: lecture
   video: HahXfnOsSUU
   playlist: PL-ymxv0nOtqox6nF4HXtXHnTQFGkRQU_2
   slides: 1lbPbd-jLj7VS7M-ntGhpv4_8WqSfqzLBNWG68_BIRL0
-- name: "Assembly Crash Course: Control Flow"
+- name: "Control Flow"
   type: lecture
   video: 0a8NlF7z7Ro
   playlist: PL-ymxv0nOtqox6nF4HXtXHnTQFGkRQU_2
   slides: 1wX5TH6DQjXw4GJo_T6I9GF7bhC689T52HSHaMUCmj1E
-- name: "Assembly Crash Course: System Calls"
+- name: "(review) System Calls"
   type: lecture
   video: vspq0u2tvhU
   playlist: PL-ymxv0nOtqox6nF4HXtXHnTQFGkRQU_2
   slides: 1vEuZ1PW8Wvm88INmWbjoKY8srEKSkv2g4o-V42BsN9Y
-- name: "Assembly Crash Course: Building Programs"
+- name: "Building Programs"
   type: lecture
   video: IITocH-WGH4
   playlist: PL-ymxv0nOtqox6nF4HXtXHnTQFGkRQU_2

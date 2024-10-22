@@ -1,6 +1,6 @@
 name: Hello Hackers
 resources:
-  - name: "Assembly: System Calls"
+  - name: "System Calls"
     type: lecture
     video: vspq0u2tvhU
     playlist: PL-ymxv0nOtqox6nF4HXtXHnTQFGkRQU_2
