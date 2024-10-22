@@ -1,95 +1,5 @@
 name: Assembly Crash Course
-challenges:
-- id: level-1
-  name: level1
-  description: Set a register
-- id: level-2-a
-  name: level2
-  description: Set multiple registers
-- id: level-2
-  name: level3
-  description: Addition
-- id: level-3
-  name: level4
-  description: Multiplication
-- id: level-4
-  name: level5
-  description: Division
-- id: level-5
-  name: level6
-  description: Modulus
-- id: level-6-a
-  name: level7
-  description: Register sizes
-- id: level-6
-  name: level8
-  description: Register sizes for modulus
-- id: level-7
-  name: level9
-  description: Bitwise shift
-- id: level-8
-  name: level10
-  description: Bitwise and
-- id: level-9
-  name: level11
-  description: Bitwise logic
-- id: level-10-a
-  name: level12
-  description: Memory reads
-- id: level-10-b
-  name: level13
-  description: Memory writes
-- id: level-10
-  name: level14
-  description: Memory reads and writes
-- id: level-11-a
-  name: level15
-  description: Read one size data
-- id: level-11
-  name: level16
-  description: Read multiple data sizes
-- id: level-12
-  name: level17
-  description: Dynamic address memory writes
-- id: level-13
-  name: level18
-  description: Consecutive memory reads
-- id: level-14
-  name: level19
-  description: The stack
-- id: level-15
-  name: level20
-  description: Swap register values with the stack
-- id: level-16
-  name: level21
-  description: Memory reads and writes with the stack
-- id: level-17-a
-  name: level22
-  description: Absolute jump
-- id: level-17-b
-  name: level23
-  description: Relative jump
-- id: level-17
-  name: level24
-  description: Control flow
-- id: level-18
-  name: level25
-  description: Conditional branches
-- id: level-19
-  name: level26
-  description: Jump tables
-- id: level-20
-  name: level27
-  description: Computing averages
-- id: level-21
-  name: level28
-  description: Implementing strlen
-- id: level-22
-  name: level29
-  description: Using library functions
-- id: level-23
-  name: level30
-  description: Compute the most common byte
+
 resources:
 - name: "(review) Computer Architecture"
   type: lecture
@@ -142,3 +52,65 @@ resources:
     - A [game](https://squallygame.com/) to teach you x86 assembly and one to [stress test your knowledge](https://oooverflow.io/zero-is-you/)!
     - A [flowchart](https://soc.me/interfaces/x86-prefixes-and-escape-opcodes-flowchart) of x86 prefix and escape opcodes.
     - An unofficial, but extremely detailed and useful [x86 reference](https://www.felixcloutier.com/x86/).
+
+challenges:
+- id: level-1
+  name: set-register
+- id: level-2
+  name: add-to-register
+- id: level-2-a
+  name: set-multiple-registers
+- id: level-3
+  name: linear-equation-registers
+- id: level-4
+  name: integer-division
+- id: level-5
+  name: modulo-operation
+- id: level-6
+  name: efficient-modulo
+- id: level-6-a
+  name: set-upper-byte
+- id: level-7
+  name: byte-extraction
+- id: level-8
+  name: bitwise-and
+- id: level-9
+  name: check-even
+- id: level-10
+  name: memory-increment
+- id: level-10-a
+  name: memory-read
+- id: level-10-b
+  name: memory-write
+- id: level-11
+  name: memory-size-access
+- id: level-11-a
+  name: byte-access
+- id: level-12
+  name: little-endian-write
+- id: level-13
+  name: memory-sum
+- id: level-14
+  name: stack-subtraction
+- id: level-15
+  name: swap-stack-values
+- id: level-16
+  name: average-stack-values
+- id: level-17
+  name: jump-trampoline
+- id: level-17-a
+  name: absolute-jump
+- id: level-17-b
+  name: relative-jump
+- id: level-18
+  name: conditional-jump
+- id: level-19
+  name: indirect-jump
+- id: level-20
+  name: average-loop
+- id: level-21
+  name: count-non-zero
+- id: level-22
+  name: string-lower
+- id: level-23
+  name: most-common-byte
