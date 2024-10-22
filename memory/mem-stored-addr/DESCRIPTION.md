@@ -8,7 +8,7 @@ Let's explore a scenario where we store the value `133700` at the address `12340
 Consider the following instructions:
 
 ```assembly
-mov rdi, 123400    # after this, rdi becomes 133700
+mov rdi, 123400    # after this, rdi becomes 123400
 mov rax, [rdi]     # here we dereference rdi, reading 42 into rax!
 ```
 
