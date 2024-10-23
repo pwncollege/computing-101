@@ -96,12 +96,12 @@ challenges:
   name: swap-stack-values
 - id: level-16
   name: average-stack-values
-- id: level-17
-  name: jump-trampoline
 - id: level-17-a
   name: absolute-jump
 - id: level-17-b
   name: relative-jump
+- id: level-17
+  name: jump-trampoline
 - id: level-18
   name: conditional-jump
 - id: level-19
