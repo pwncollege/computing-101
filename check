@@ -2,6 +2,7 @@
 
 import pwnlib.context
 import pwnlib.asm
+import pwnlib.elf
 import contextlib
 import capstone
 import tempfile
