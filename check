@@ -95,10 +95,20 @@ def get_raw_binary(content):
 			"but did not yet create a runnable ELF from it. "
 			"Please do that with the 'ld' command!"
 		)
+	if magic.from_buffer(content) == "ELF 64-bit relocatable":
+		raise ChallengeFailed(
+			"You provided an ELF relocatable object, rather than an actual\n"
+			"ELF executable. The relocatable object is an intermediate result\n"
+			"of the compilation/assembly process. Please 'link' it into an\n"
+			"executable by using:\n"
+			"\n"
+			"hacker@dojo:~$ ld final.elf your-relocatable-elf.o"
+			"\n"
+			"This will create a 'final.elf' file that you can pass to this program!"
+		)
 	if magic.from_buffer(content) in (
 		"ELF 64-bit LSB shared object",
 		"ELF 64-bit LSB pie executable"
-		"ELF 64-bit relocatable"
 	):
 		if getattr(chal, "allow_elf", True):
 			raise ChallengeFailed(
