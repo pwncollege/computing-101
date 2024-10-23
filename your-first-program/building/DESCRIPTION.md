@@ -26,7 +26,7 @@ But it needs to contain _just a tad more info_.
 We mentioned that we're using the _Intel_ assembly syntax in this course, and we'll need to let the assembler know that.
 You do this by prepending a directive to the beginning of your assembly code, as such:
 
-```
+```console
 hacker@dojo:~$ cat asm.s
 .intel_syntax noprefix
 mov rdi, 42
@@ -42,7 +42,7 @@ We'll talk about these later, but for now, we'll let the assembler figure it out
 Next, we'll assemble the code.
 This is done using the **as**sembler, `as`, as so:
 
-```
+```console
 hacker@dojo:~$ ls
 asm.s
 hacker@dojo:~$ cat asm.s
