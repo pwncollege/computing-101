@@ -16,8 +16,10 @@ Go go go!
 
 check_runtime_success = """
 \033[92m
-Neat! Your program exited with the correct error code! But what
-if it hadn't? Next, we'll learn about some simple debugging.
+Neat! Your program exited with the correct error code! But in this level,
+we built the executable for you. Next, you'll learn how to build the executable
+yourself, and then you'll be ready to walk the path of Assembly!
+
 For now, take this with you:
 
 \033[0m

@@ -27,6 +27,8 @@ challenges:
   name: "Your First Syscall"
 - id: exit-code
   name: "Exit Codes"
+- id: building
+  name: "Building Executables"
 - id: strace
   name: "Tracing Syscalls"
 - id: movreg
