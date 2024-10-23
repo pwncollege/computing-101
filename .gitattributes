@@ -1,1 +1,2 @@
 solves/** filter=git-crypt diff=git-crypt
+tests/solves/** filter=git-crypt diff=git-crypt
