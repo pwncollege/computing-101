@@ -205,7 +205,7 @@ def main():
 		binary_prefix = _assemble(chal.assembly_prefix)
 		raw_binary = binary_prefix + raw_binary
 	if hasattr(chal, "assembly_suffix"):
-		binary_prefix = _assemble(chal.assembly_suffix)
+		binary_suffix = _assemble(chal.assembly_suffix)
 		raw_binary = raw_binary + binary_suffix
 
 	do_check("check_raw_binary", "Checking the binary code", raw_binary)
