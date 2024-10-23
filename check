@@ -108,7 +108,7 @@ def get_raw_binary(content):
 		"ELF 64-bit LSB pie executable" in m or
 		"ELF 64-bit LSB executable" in m
 	):
-		if getattr(chal, "allow_elf", True):
+		if not getattr(chal, "allow_elf", True):
 			raise ChallengeFailedPrint(
 				"This challenge requires you to provide raw binary code, "
 				"but you provided an ELF. Please extract your .text segment "
