@@ -22,6 +22,8 @@ if os.geteuid() == 0:
 
 class ChallengeFailed(Exception):
 	pass
+class ChallengeFailedPrint(ChallengeFailed):
+	pass
 
 def print_prompt():
 	print(f"""hacker@{socket.gethostname()}:{
@@ -59,7 +61,7 @@ def _assemble(asm):
 
 def assemble(asm):
 	if not getattr(chal, "allow_asm", False):
-		raise ChallengeFailed(
+		raise ChallengeFailedPrint(
 			"This challenge requires you to assemble the code yourself. "
 			"Please do that."
 		)
@@ -77,11 +79,11 @@ def assemble(asm):
 				for line in errors[4:]
 				if line
 			)
-			raise ChallengeFailed(
+			raise ChallengeFailedPrint(
 				f"Your assembly did not assemble cleanly. The errors:\n{msg}"
 			) from e
 
-		raise ChallengeFailed(
+		raise ChallengeFailedPrint(
 			"Your assembly resulted in unexpected assembly errors:\n" +
 			e.message
 		) from e
@@ -89,29 +91,25 @@ def assemble(asm):
 	return x86
 
 def get_raw_binary(content):
-	if magic.from_buffer(content) == "ELF 64-bit LSB relocatable":
-		raise ChallengeFailed(
-			"It looks like you assembled your assembly code, "
-			"but did not yet create a runnable ELF from it. "
-			"Please do that with the 'ld' command!"
-		)
-	if magic.from_buffer(content) == "ELF 64-bit relocatable":
-		raise ChallengeFailed(
-			"You provided an ELF relocatable object, rather than an actual\n"
-			"ELF executable. The relocatable object is an intermediate result\n"
+	m = magic.from_buffer(content)
+	if m == "ELF 64-bit relocatable":
+		raise ChallengeFailedPrint(
+			"You provided an ELF object file, rather than an actual\n"
+			"ELF executable. The object file is an intermediate result\n"
 			"of the compilation/assembly process. Please 'link' it into an\n"
 			"executable by using:\n"
 			"\n"
-			"hacker@dojo:~$ ld final.elf your-relocatable-elf.o"
+			"hacker@dojo:~$ ld final.elf your-object-file.o"
 			"\n"
 			"This will create a 'final.elf' file that you can pass to this program!"
 		)
-	if magic.from_buffer(content) in (
-		"ELF 64-bit LSB shared object",
-		"ELF 64-bit LSB pie executable"
+	if (
+		"ELF 64-bit LSB shared object" in m or
+		"ELF 64-bit LSB pie executable" in m or
+		"ELF 64-bit LSB executable" in m
 	):
 		if getattr(chal, "allow_elf", True):
-			raise ChallengeFailed(
+			raise ChallengeFailedPrint(
 				"This challenge requires you to provide raw binary code, "
 				"but you provided an ELF. Please extract your .text segment "
 				"using 'objcopy'!"
@@ -121,12 +119,12 @@ def get_raw_binary(content):
 			o.write(content)
 		text = pwnlib.elf.ELF(tmpelf).get_section_by_name(".text")
 		if not text:
-			raise ChallengeFailed(
+			raise ChallengeFailedPrint(
 				"The ELF you provided is missing the .text section!"
 			)
 		rawbin = text.data()
 		if not rawbin:
-			raise ChallengeFailed(
+			raise ChallengeFailedPrint(
 				"The .text section of the ELF you provided is empty!"
 			)
 		return rawbin
@@ -190,7 +188,8 @@ def main():
 		if chal.allow_asm:
 			print("Please input your assembly. Press Ctrl+D when done!")
 		else:
-			print("Please input your assembled binary:")
+			print(f"Please run this program as `{sys.argv[0]} your-program.elf`!")
+			sys.exit(1)
 		content = b""
 		while line := sys.stdin.buffer.readline():
 			content += line
@@ -242,6 +241,11 @@ def main():
 if __name__ == '__main__':
 	try:
 		main()
+	except (ChallengeFailedPrint) as _e:
+		print("Check failed:")
+		print()
+		with output_color("FAIL"):
+			print(_e)
 	except (ChallengeFailed, AssertionError):
 		# we assume we already printed
 		pass
