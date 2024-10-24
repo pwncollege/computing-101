@@ -3,6 +3,7 @@
 import os
 import sys
 import re
+import magic
 import collections
 import string
 import random
@@ -12,6 +13,7 @@ from collections import defaultdict
 
 import pwnlib
 import pwnlib.asm
+import pwnlib.elf
 from unicorn import *
 from unicorn.x86_const import *
 from capstone import *
@@ -242,8 +244,16 @@ class ASMBase:
         print(hints)
         print(self.description)
 
+        if len(sys.argv) > 1:
+            m = magic.from_file(sys.argv[1])
+            if m.startswith("ELF"):
+                print("Extracting binary code from provided ELF file...")
+                self.asm = pwnlib.elf.ELF(sys.argv[1]).get_section_by_name(".text").data()
+            else:
+                print(f"Unsupported file type ({m}) for argument {sys.argv[1]}.")
+
         if not self.asm:
-            print("Please give me your assembly in bytes (up to 0x1000 bytes): ")
+            print(f"You ran me without an argument. You can re-run with `{sys.argv[0]} /path/to/your/elf` to input an ELF file, or just give me your assembled and extracted code in bytes (up to 0x1000 bytes): ")
             self.asm = sys.stdin.buffer.read1(0x1000)
 
             # assuming no hex-only assembly challenges
