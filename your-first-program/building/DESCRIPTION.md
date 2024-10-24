@@ -52,7 +52,7 @@ mov rax, 60
 syscall
 hacker@dojo:~$ as -o asm.o asm.s
 hacker@dojo:~$ ls
-asm.s   asm.o
+asm.o   asm.s
 hacker@dojo:~$
 ```
 
@@ -68,10 +68,10 @@ This is done with the `ld` (stemming from the term "**l**ink e**d**itor") comman
 
 ```console
 hacker@dojo:~$ ls
-asm.s   asm.o
+asm.o   asm.s
 hacker@dojo:~$ ld -o exe asm.o
 hacker@dojo:~$ ls
-asm.s   asm.o   exe
+asm.o   asm.s   exe
 hacker@dojo:~$
 ```
 
