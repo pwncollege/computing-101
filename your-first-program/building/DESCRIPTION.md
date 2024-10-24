@@ -70,6 +70,7 @@ This is done with the `ld` (stemming from the term "**l**ink e**d**itor") comman
 hacker@dojo:~$ ls
 asm.o   asm.s
 hacker@dojo:~$ ld -o exe asm.o
+ld: warning: cannot find entry symbol _start; defaulting to 0000000000401000
 hacker@dojo:~$ ls
 asm.o   asm.s   exe
 hacker@dojo:~$
@@ -89,3 +90,35 @@ Neat!
 Now you can build programs.
 In this challenge, go ahead and run through these steps yourself.
 Build your executable, and pass it to `/challenge/check` for the flag!
+
+----
+**_start?**  
+The attentive learner might have noticed that `ld` prints a warning about `entry symbol _start`.
+The `_start` symbol is, essentially, a note to `ld` about where in your program execution should begin when the ELF is executed.
+The warning states that, absent a specified `_start`, execution will start right at the beginning of the code.
+This is just fine for us!
+
+If you want to silence the error, you can specify the `_start` symbol, in your code, as so:
+
+```console
+hacker@dojo:~$ cat asm.s
+.intel_syntax noprefix
+.global _start
+_start:
+mov rdi, 42
+mov rax, 60
+syscall
+hacker@dojo:~$ as -o asm.o asm.s
+hacker@dojo:~$ ld -o exe asm.o
+hacker@dojo:~$ ./exe
+hacker@dojo:~$ echo $?
+42
+hacker@dojo:~$
+```
+
+There are two extra lines here.
+The second, `_start:`, adds a _label_ called start, pointing to the beginning of your code.
+The first, `.global _start`, directs `as` to make the `_start` label _globally visible_ at the linker level, instead of just locally visible at the object file level.
+As `ld` is the linker, this directive is necessary for the `_start` label to be seen.
+
+For all the challenges in this dojo, starting execution at the beginning of the file is just fine, but if you don't want to see those warnings pop up, now you know how to prevent them!
