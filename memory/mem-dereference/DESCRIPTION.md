@@ -34,7 +34,7 @@ Now, what you have is the following situation:
 ```
 
 Here, `rdi` now holds a value that corresponds with the address of the data that want to load!
-No, we load it:
+Now, we load it:
 
 ```assembly
 mov rdi, [rax]
