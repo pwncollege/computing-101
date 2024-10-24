@@ -82,7 +82,7 @@ def check_disassembly(disas):
 
 	set_regs, get_args = zip(*mov_operands)
 	assert set(set_regs) >= set(must_set_regs), (
-		"You must set each of the following registers (using the mov instruction):\n    "+", ".join(set_regs)
+		"You must set each of the following registers (using the mov instruction):\n    "+", ".join(must_set_regs)
 	)
 
 	assert set(get_args) >= set(must_get_regs), (
