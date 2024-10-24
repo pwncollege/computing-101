@@ -129,7 +129,7 @@ def get_raw_binary(content):
 				"The .text section of the ELF you provided is empty!"
 			)
 		return rawbin
-	elif magic.from_buffer(content).startswith("ASCII"):
+	elif magic.from_buffer(content).endswith("text"):
 		return assemble(content.decode('latin1')+"\n")
 	else: #assuming this is binary code
 		return content
