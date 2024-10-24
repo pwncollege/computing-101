@@ -33,15 +33,14 @@ Now, what you have is the following situation:
 +────────────────────+
 ```
 
-Here, `rdi` now holds a value that corresponds with the address of the data that want to load!
-Now, we load it:
+`rdi` now holds a value that corresponds with the address of the data that want to load!
+Let's load it:
 
 ```assembly
 mov rdi, [rax]
 ```
 
-How interesting!
-Here, we are accessing memory, but instead of specifying a fixed address like `133700` during the dereference, we're using the value stored in `rax` as the memory address.
+Here, we are accessing memory, but instead of specifying a fixed address like `133700` for the memory read, we're using the value stored in `rax` as the memory address.
 By containing the memory address, `rax` is a _pointer_ that _points to_ the data we want to access!
 When we use `rax` in lieu of directly specifying the address that it stores to access the memory address that it references, we call this _dereferencing_ the pointer.
 In the above example, we _dereference_ `rax` to load the data it points to (the value `42` at address `133700`) into `rdi`.
