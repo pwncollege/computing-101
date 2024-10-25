@@ -67,6 +67,7 @@ def assemble(asm):
                 "This challenge requires you to assemble the code yourself. "
                 "Please do that."
             )
+
         try:
             x86 = _assemble(asm)
         except pwnlib.exception.PwnlibException as e:
@@ -88,12 +89,15 @@ def assemble(asm):
                 "Your assembly resulted in unexpected assembly errors:\n" +
                 e.message
             ) from e
+
         return x86
+
     except (ChallengeFailedPrint) as _e:
         print("Check failed:")
         print()
         with output_color("FAIL"):
             print(_e)
+
     finally:
         with output_color("warning"):
             print("Potentially ASCII bytecode, choosing to interpret as bytecode instead of assembly as last resort.\n")
