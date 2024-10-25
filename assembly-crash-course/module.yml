@@ -56,36 +56,36 @@ resources:
 challenges:
 - id: level-1
   name: set-register
-- id: level-2
-  name: add-to-register
 - id: level-2-a
   name: set-multiple-registers
+- id: level-2
+  name: add-to-register
 - id: level-3
   name: linear-equation-registers
 - id: level-4
   name: integer-division
 - id: level-5
   name: modulo-operation
-- id: level-6
-  name: efficient-modulo
 - id: level-6-a
   name: set-upper-byte
+- id: level-6
+  name: efficient-modulo
 - id: level-7
   name: byte-extraction
 - id: level-8
   name: bitwise-and
 - id: level-9
   name: check-even
-- id: level-10
-  name: memory-increment
 - id: level-10-a
   name: memory-read
 - id: level-10-b
   name: memory-write
-- id: level-11
-  name: memory-size-access
+- id: level-10
+  name: memory-increment
 - id: level-11-a
   name: byte-access
+- id: level-11
+  name: memory-size-access
 - id: level-12
   name: little-endian-write
 - id: level-13
