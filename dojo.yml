@@ -1,6 +1,7 @@
 name: Computing 101
 type: welcome
 id: computing-101
+image: pwncollege/challenge-legacy:latest
 award:
   emoji: 💻
 modules:
