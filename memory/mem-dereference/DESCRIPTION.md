@@ -1,5 +1,5 @@
 Did you prefer to access memory at `133700` or at `123400`?
-Your answer might say something about your personality, but it's not super relevent from a technical perspective.
+Your answer might say something about your personality, but it's not super relevant from a technical perspective.
 In fact, in most cases, you don't deal with actual memory addresses when writing programs at all!
 
 How is this possible?
