@@ -16,7 +16,7 @@ Let's start with this memory configuration:
 And consider this assembly snippet:
 
 ```assembly
-mov rdi, 133700
+mov rax, 133700
 ```
 
 Now, what you have is the following situation:
@@ -29,11 +29,11 @@ Now, what you have is the following situation:
                        │
  Register │ Contents   │
 +────────────────────+ │
-│ rdi     │ 133700   │─┘
+│ rax     │ 133700   │─┘
 +────────────────────+
 ```
 
-`rdi` now holds a value that corresponds with the address of the data that want to load!
+`rax` now holds a value that corresponds with the address of the data that want to load!
 Let's load it:
 
 ```assembly
