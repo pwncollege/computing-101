@@ -21,7 +21,7 @@ The result looks something like this, using `133700` for `SECRET_LOCATION_1` and
                           │
     Register │ Contents   │
    +────────────────────+ │
-   │ rdi     │ 133700   │─┘
+   │ rax     │ 133700   │─┘
    +────────────────────+
 ```
 
