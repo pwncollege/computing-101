@@ -10,14 +10,15 @@ Then, we put `SECRET_ADDRESS_2` into `rax`!
 The result looks something like this, using `133700` for `SECRET_LOCATION_1` and 123400 for `SECRET_LOCATION_2` (not, in the real challenge, these values will be different and hidden from you!):
 
 ```text
-     Address │ Contents
-   +────────────────────+
- ┌─│ 133700  │ 123400   │◂┐
+ ┌────────────────────────┐
+ │   Address │ Contents   │
  │ +────────────────────+ │
  └▸│ 123400  │ 42       │ │
    +────────────────────+ │
-                          │
-                          │
+ ┌▸│ 133700  │ 123400   │─┘
+ │ +────────────────────+
+ │
+ └────────────────────────┐
                           │
     Register │ Contents   │
    +────────────────────+ │
