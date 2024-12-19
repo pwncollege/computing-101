@@ -22,15 +22,17 @@ mov rax, 133700
 Now, what you have is the following situation:
 
 ```text
-  Address │ Contents
-+────────────────────+
-│ 133700  │ 42       │◂┐
-+────────────────────+ │
-                       │
- Register │ Contents   │
-+────────────────────+ │
-│ rax     │ 133700   │─┘
-+────────────────────+
+     Address │ Contents
+   +────────────────────+
+ ┌▸│ 133700  │ 42       │
+ │ +────────────────────+
+ │
+ └────────────────────────┐
+                          │
+    Register │ Contents   │
+   +────────────────────+ │
+   │ rax     │ 133700   │─┘
+   +────────────────────+
 ```
 
 `rax` now holds a value that corresponds with the address of the data that want to load!
