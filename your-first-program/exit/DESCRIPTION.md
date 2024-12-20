@@ -28,4 +28,4 @@ The `exit` syscall causes a program to exit.
 By explicitly exiting, we can avoid the crash we ran into with our previous program!
 
 Now, the syscall number of `exit` is `60`.
-Go and write your first program: it should move 60 into `rax`, then invoke `syscall` to cleanly exit!
+Go and write your first program: it should move `60` into `rax`, then invoke `syscall` to cleanly exit!
