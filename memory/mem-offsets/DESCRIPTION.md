@@ -5,18 +5,20 @@ Sometimes, for example, a pointer might point to a collection of data (say, an e
 For example, if your pointer (say, `rdi`) points to a sequence of numbers in memory, as so:
 
 ```text
-  Address │ Contents
-+────────────────────+
-│ 133700  │ 50       │◂┐
-│ 133701  │ 42       │ │
-│ 133702  │ 99       │ │
-│ 133703  │ 14       │ │
-+────────────────────+ │
-                       │
- Register │ Contents   │
-+────────────────────+ │
-│ rdi     │ 133700   │─┘
-+────────────────────+
+    Address │ Contents
+  +────────────────────+
+┌▸│ 133700  │ 50       │
+│ │ 133701  │ 42       │
+│ │ 133702  │ 99       │
+│ │ 133703  │ 14       │
+│ +────────────────────+
+│
+└────────────────────────┐
+                         │
+   Register │ Contents   │
+  +────────────────────+ │
+  │ rdi     │ 133700   │─┘
+  +────────────────────+
 ```
 
 
@@ -36,23 +38,25 @@ As before, we will initialize `rdi` to point at the secret value, but not _direc
 This time, the secret value will have an offset of 8 bytes from where `rdi` points, something analogous to this:
 
 ```text
-  Address │ Contents
-+────────────────────+
-│ 31337   │ 0        │◂┐
-│ 31337+1 │ 0        │ │
-│ 31337+2 │ 0        │ │
-│ 31337+3 │ 0        │ │
-│ 31337+4 │ 0        │ │
-│ 31337+5 │ 0        │ │
-│ 31337+6 │ 0        │ │
-│ 31337+7 │ 0        │ │
-│ 31337+8 │ ???      │ │
-+────────────────────+ │
-                       │
- Register │ Contents   │
-+────────────────────+ │
-│ rdi     │ 31337    │─┘
-+────────────────────+
+    Address │ Contents
+  +────────────────────+
+┌▸│ 31337   │ 0        │
+│ │ 31337+1 │ 0        │
+│ │ 31337+2 │ 0        │
+│ │ 31337+3 │ 0        │
+│ │ 31337+4 │ 0        │
+│ │ 31337+5 │ 0        │
+│ │ 31337+6 │ 0        │
+│ │ 31337+7 │ 0        │
+│ │ 31337+8 │ ???      │
+│ +────────────────────+
+│
+└────────────────────────┐
+                         │
+   Register │ Contents   │
+  +────────────────────+ │
+  │ rdi     │ 31337    │─┘
+  +────────────────────+
 ```
 
 Of course, the actual memory address is not `31337`.
