@@ -32,7 +32,7 @@ In the kinda-C syntax that we learned from `strace`, this would be:
 write(file_descriptor, memory_address, number_of_characters_to_write)
 ```
 
-For a more concrete example, if you wanted to write 10 characters from memory address 1337000 to standard output (file descriptor 1), this would be:
+For a more concrete example, if you wanted to write 10 characters from memory address `1337000` to standard output (file descriptor 1), this would be:
 
 ```c
 write(1, 1337000, 10);
