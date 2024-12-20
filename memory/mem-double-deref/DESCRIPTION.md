@@ -10,19 +10,19 @@ Then, we put `SECRET_ADDRESS_2` into `rax`!
 The result looks something like this, using `133700` for `SECRET_LOCATION_1` and 123400 for `SECRET_LOCATION_2` (not, in the real challenge, these values will be different and hidden from you!):
 
 ```text
-       Address │ Contents
-     +────────────────────+
- ┌──▸│ 133700  │ 123400   │─┐
- │   +────────────────────+ │
- │ ┌▸│ 123400  │ 42       │ │
- │ │ +────────────────────+ │
- │ └────────────────────────┘
- └──────────────────────────┐
-                            │
-      Register │ Contents   │
-     +────────────────────+ │
-     │ rax     │ 133700   │─┘
-     +────────────────────+
+      Address │ Contents
+    +────────────────────+
+┌──▸│ 133700  │ 123400   │─┐
+│   +────────────────────+ │
+│ ┌▸│ 123400  │ 42       │ │
+│ │ +────────────────────+ │
+│ └────────────────────────┘
+└──────────────────────────┐
+                           │
+     Register │ Contents   │
+    +────────────────────+ │
+    │ rax     │ 133700   │─┘
+    +────────────────────+
 ```
 
 Here, you will need to perform two memory reads: one dereferencing `rax` to read `SECRET_LOCATION_1` from the location that `rax` is pointing to (which is `SECRET_LOCATION_2`), and the second one dereferencing whatever register now holds `SECRET_LOCATION_1` to read `SECRET_VALUE` into `rdi`, so you can use it as the exit code!
