@@ -21,5 +21,6 @@ It's a mystery as to why the `mov` was chosen rather than something reasonable l
 
 Anyways, on to the challenge!
 In this challenge, we will store a secret value in the `rsi` register, and your program must exit with that value as the return code.
+Run `/challenge/check` to set the secret value in `rsi`, and pass it your code for the flag!
 Since `exit` uses the value stored in `rdi` as the return code, you'll need to move the secret value in `rsi` into `rdi`.
 Good luck!
