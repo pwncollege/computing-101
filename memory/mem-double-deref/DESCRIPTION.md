@@ -7,7 +7,7 @@ In the last few levels, you have:
 Let's put those last two together.
 In this challenge, we stored our `SECRET_VALUE` in memory at the address `SECRET_LOCATION_1`, then stored `SECRET_LOCATION_1` in memory at the address `SECRET_LOCATION_2`.
 Then, we put `SECRET_ADDRESS_2` into `rax`!
-The result looks something like this, using `133700` for `SECRET_LOCATION_1` and `123400` for `SECRET_LOCATION_2` (not, in the real challenge, these values will be different and hidden from you!):
+The result looks something like this, using `123400` for `SECRET_LOCATION_1` and `133700` for `SECRET_LOCATION_2` (not, in the real challenge, these values will be different and hidden from you!):
 
 ```text
       Address │ Contents
