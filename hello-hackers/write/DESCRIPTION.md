@@ -54,7 +54,7 @@ Now, how do we actually specify these parameters?
 And, of course, the `write` syscall index into `rax` itself: `1`.
 Other than the `rdi` vs `rdx` confusion, this is really easy!
 
-Now, you know how to point a register at a memory address (from the [Memory](../memory) module!), and yo know how to set the system call number, and how to set the rest of the registers.
+Now, you know how to point a register at a memory address (from the [Memory](../memory) module!), and you know how to set the system call number, and how to set the rest of the registers.
 So, this should be cake!
 
 Similar to before, we wrote a single secret character value into memory at address `1337000`.
