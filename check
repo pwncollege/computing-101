@@ -1,5 +1,9 @@
 #!/usr/bin/exec-suid --real -- /bin/python3 -I
 
+import os
+os.environ["PATH"] = "/challenge/bin:/bin:/usr/bin:/usr/local/bin"
+os.environ["TERM"] = "xterm-256color"
+
 import pwnlib.context
 import pwnlib.asm
 import pwnlib.elf
@@ -10,7 +14,6 @@ import socket
 import magic
 import time
 import sys
-import os
 
 pwnlib.context.context.arch = "amd64"
 cs = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_64)
