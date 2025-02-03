@@ -19,6 +19,7 @@ from unicorn.x86_const import *
 from capstone import *
 
 os.environ["PATH"] = "/challenge/bin:/bin:/usr/bin:/usr/local/bin"
+os.environ["TERM"] = "xterm"
 
 pwnlib.context.context.update(arch="amd64")
 builtin_print = print
