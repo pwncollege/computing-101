@@ -2,5 +2,9 @@ name: Software Introspection
 challenges:
 - id: strace
   name: "Tracing Syscalls"
-- id: gdb-start
-  name: "GDB: Starting"
+- id: gdb-launch
+  name: "Starting GDB"
+  transfer:
+    dojo: computing-101
+    module: introspecting
+    challenge: gdb-start
