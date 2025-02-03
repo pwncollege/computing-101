@@ -10,7 +10,7 @@ define hook-stop
   printf "You successfully started GDB!\n"
   printf "Here is the secret number: %d\n", $rsi
   printf "Submit that with /challenge/submit-number. Goodbye!\n"
+  set logging on
   stop
   quit
-  set logging on
 end
