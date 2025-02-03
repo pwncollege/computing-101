@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 if [ "$#" -eq 0 ]
 then
@@ -12,7 +12,7 @@ then
 	exit 1
 fi
 
-if [ "$(realpath "$1")" -ne "/challenge/debug-me" ]
+if [ "$(realpath "$1")" != "/challenge/debug-me" ]
 then
 	fold -s <<<"It looks like you are trying to debug a file other than /challenge/debug-me. Make sure to debug the right file!"
 	exit 1
