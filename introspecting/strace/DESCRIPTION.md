@@ -3,7 +3,7 @@ The first one is pretty simple: the **s**yscall **trace**r, `strace`.
 Given a program to run, `strace` will use functionality of the Linux operating system to introspect and record every system call that the program invokes, and its result.
 For example, let's look at our program from the previous challenge:
 
-```assembly
+```console
 hacker@dojo:~$ strace /tmp/your-program
 execve("/tmp/your-program", ["/tmp/your-program"], 0x7ffd48ae28b0 /* 53 vars */) = 0
 exit(42)                                 = ?
