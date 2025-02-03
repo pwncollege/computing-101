@@ -1,6 +1,7 @@
 set logging redirect on
 set logging file /dev/null
 set logging on
+set height 0
 starti
 stepi
 set logging off
