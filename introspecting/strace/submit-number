@@ -1,4 +1,4 @@
-#!/opt/pwn.college/bash
+#!/usr/bin/exec-suid --real -- /bin/bash -p
 
 if [ "$UID" -ne 0 ]
 then
