@@ -4,7 +4,5 @@ challenges:
   name: "Tracing Syscalls"
 - id: gdb-launch
   name: "Starting GDB"
-  transfer:
-    dojo: computing-101
-    module: introspecting
-    challenge: gdb-start
+- id: gdb-starti
+  name: "Starting Programs in GDB"
