@@ -1,5 +1,3 @@
-As you write larger and larger programs, you (yes, even you!) might make mistakes when implementing certain functionality, introducing _bugs_ into your programs.
-Throughout this module, we'll go over a few tools and techniques for _debugging_ your program.
 The first one is pretty simple: the **s**yscall **trace**r, `strace`.
 
 Given a program to run, `strace` will use functionality of the Linux operating system to introspect and record every system call that the program invokes, and its result.
