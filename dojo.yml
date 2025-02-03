@@ -6,6 +6,7 @@ award:
   emoji: 💻
 modules:
 - id: your-first-program
+- id: introspecting
 - id: memory
 - id: hello-hackers
 - id: assembly-crash-course
