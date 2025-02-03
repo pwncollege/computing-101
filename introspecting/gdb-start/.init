@@ -4,9 +4,7 @@ NUM=$RANDOM
 echo $NUM > /challenge/.correct
 chmod 600 /challenge/.correct
 
-cp .gdbinit /etc/gdb/gdbinit
-
 ASM=$(mktemp).o
 as -o $ASM <<< ".intel_syntax noprefix; mov rsi, $NUM; mov rdi, 0; mov rax, 60; syscall"
-ld -o /challenge/trace-me $ASM 2>/tmp/.init.log
+ld -o /challenge/debug-me $ASM 2>/tmp/.init.log
 rm $ASM
