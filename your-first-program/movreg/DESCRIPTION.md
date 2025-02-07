@@ -17,7 +17,7 @@ mov rdi, rsi
 Just like the first line there moves `42` into `rsi`, the second like moves the value in `rsi` to `rdi`.
 Here, we have to mention one complication: by _move_, we really mean _set_.
 After the snippet above, `rsi` _and_ `rdi` will be `42`.
-It's a mystery as to why the `mov` was chosen rather than something reasonable like `set` (even very knowledgeable people resort to [diverse speculation](https://retrocomputing.stackexchange.com/questions/12968/why-is-the-processor-instruction-called-move-not-copy) when asked), but it was, and here we are.
+It's a mystery as to why the `mov` was chosen rather than something reasonable like `set` (even very knowledgeable people resort to [wild speculation](https://retrocomputing.stackexchange.com/questions/12968/why-is-the-processor-instruction-called-move-not-copy) when asked), but it was, and here we are.
 
 Anyways, on to the challenge!
 In this challenge, we will store a secret value in the `rsi` register, and your program must exit with that value as the return code.

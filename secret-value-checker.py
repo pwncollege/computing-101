@@ -195,7 +195,7 @@ def check_runtime(filename):
 				assert expected_bytes == actual_bytes, (
 					f"The value you wrote to {c} ({actual_bytes}) does not match the secret value ({expected_bytes})!"
 				)
-			if 'exit' in secret_checks:
+			if c == "exit":
 				checker.dramatic_command("echo $?", actual_command=f"echo {returncode}")
 				assert returncode == exit_code, f"Your program exited with the wrong error code (should be {exit_code})..."
 	finally:
