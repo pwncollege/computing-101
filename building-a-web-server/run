@@ -1,4 +1,4 @@
-#!/usr/bin/exec-suid --real -- /bin/python3 -I
+#!/usr/bin/exec-suid -- /bin/python3 -I
 
 import os
 import sys
