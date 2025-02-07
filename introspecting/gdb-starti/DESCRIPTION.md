@@ -14,4 +14,5 @@ You start a program with the `starti` command:
 (gdb) starti
 ```
 
+`starti` "**start**s the program at the very first **i**nstruction.
 Give it a try now, and we'll configure gdb to magically extract the secret value once the program is running.

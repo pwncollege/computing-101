@@ -7,7 +7,7 @@ define hook-stop
   stepi
   set logging off
   printf "\n\n"
-  printf "You successfully started GDB!\n"
+  printf "You successfully started your program!\n"
   printf "Here is the secret number: %d\n", $rsi
   printf "Submit that with /challenge/submit-number. Goodbye!\n"
   set logging on
