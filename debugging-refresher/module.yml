@@ -2,28 +2,20 @@ name: Debugging Refresher
 challenges:
 - id: level-1
   name: level1
-  description: ""
 - id: level-2
   name: level2
-  description: ""
 - id: level-3
   name: level3
-  description: ""
 - id: level-4
   name: level4
-  description: ""
 - id: level-5
   name: level5
-  description: ""
 - id: level-6
   name: level6
-  description: ""
 - id: level-7
   name: level7
-  description: ""
 - id: level-8
   name: level8
-  description: ""
 resources:
 - name: Robert's GDB Walkthrough
   type: lecture
