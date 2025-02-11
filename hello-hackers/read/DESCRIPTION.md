@@ -36,3 +36,12 @@ Your program should:
 3. finally, exit with the exit code `42`.
 
 Remember: you've already written steps 2 and 3. All you have to do is add step 1!
+
+----
+**NOTE:**
+Keep in mind that, in this challenge, you'll be writing 8 characters, whereas in the previous challenge, you wrote 14.
+Don't forget to update your `write()` size (in `rdx`)!
+
+**DEBUGGING:**
+Having trouble?
+Build your program and run it with `strace` to see what's happening at the system call level!
