@@ -5,4 +5,5 @@ Run the actual level logic with `r`, and follow the prompts to get that flag!
 
 ----
 **RELEVANT DOCUMENTATION:**
-This level uses the [`run`](https://sourceware.org/gdb/current/onlinedocs/gdb#Starting) and [`continue`](https://sourceware.org/gdb/current/onlinedocs/gdb#Continuing-and-Stepping) commands in gdb.
+- gdb's [run](https://sourceware.org/gdb/current/onlinedocs/gdb#Starting) command
+- gdb's [continue](https://sourceware.org/gdb/current/onlinedocs/gdb#Continuing-and-Stepping) command
