@@ -21,5 +21,6 @@ Think about what the arguments to the read system call are.
 **RELEVANT DOCUMENTATION:**
 - gdb's [run](https://sourceware.org/gdb/current/onlinedocs/gdb#Starting) command
 - gdb's [continue](https://sourceware.org/gdb/current/onlinedocs/gdb#Continuing-and-Stepping) command
+- gdb's [info](https://sourceware.org/gdb/current/onlinedocs/gdb#Registers) command
 - gdb's [print](https://sourceware.org/gdb/current/onlinedocs/gdb#Data) command
 - gdb's [examine](https://sourceware.org/gdb/current/onlinedocs/gdb#Memory) command
