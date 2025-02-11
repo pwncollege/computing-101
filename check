@@ -5,9 +5,11 @@ os.environ["PATH"] = "/challenge/bin:/bin:/usr/bin:/usr/local/bin"
 os.environ["TERM"] = "xterm-256color"
 
 import pwnlib.context
+import pwnlib.tubes.process
 import pwnlib.asm
 import pwnlib.elf
 import contextlib
+import subprocess
 import capstone
 import tempfile
 import socket
@@ -34,21 +36,37 @@ def print_prompt():
         os.getcwd().replace(os.path.expanduser('~'), '~', 1)
     }$ """, end="", flush=True)
 
+def slow_pause():
+    if "FAST" not in os.environ:
+        time.sleep(0.05)
+
 def slow_print(what):
     for c in what:
         print(c, end="", flush=True)
-        if "FAST" not in os.environ:
-            time.sleep(0.05)
+        slow_pause()
     print("")
 
-def dramatic_command(command, actual_command=None):
+def dramatic_command(command, stdin=None, actual_command=None):
     print_prompt()
     slow_print(command)
-    exit_code = os.WEXITSTATUS(
-        os.system(command if actual_command is None else actual_command)
-    )
-    if "FAST" not in os.environ:
-        time.sleep(0.5)
+    if not stdin:
+        exit_code = os.WEXITSTATUS(
+            os.system(command if actual_command is None else actual_command)
+        )
+    else:
+        p = pwnlib.tubes.process.process(
+            command if actual_command is None else actual_command,
+            shell=True
+        )
+        slow_pause()
+        slow_print(stdin.decode())
+        time.sleep(0.05)
+        p.write(stdin)
+        p.shutdown("send")
+        p.wait()
+        exit_code = p.poll()
+
+    slow_pause()
     return exit_code
 
 @contextlib.contextmanager

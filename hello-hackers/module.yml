@@ -12,3 +12,5 @@ challenges:
   name: "Chaining Syscalls"
 - id: hello-hackers
   name: "Writing Strings"
+- id: read
+  name: "Reading Data"

@@ -19,6 +19,7 @@ secret_value_desc = getattr(chalconf, 'secret_value_desc', f"value {secret_value
 clean_exit = getattr(chalconf, 'clean_exit', True)
 skip_deref_checks = getattr(chalconf, 'skip_deref_checks', False)
 exit_code = getattr(chalconf, 'exit_code', secret_value)
+stdin = getattr(chalconf, 'stdin', None)
 
 check_runtime_success = getattr(chalconf, "success_message", "Neat! Your program passed the tests! Great job!")
 
@@ -51,7 +52,12 @@ if secret_addr_reg:
 if secret_value_reg:
 	assembly_prefix += f"mov {secret_value_reg}, {secret_value}\n"
 
-if secret_value_reg is not None:
+if stdin is not None:
+	check_runtime_prologue = f"""
+Let's check what your output is! It should be our secret value, {stdin},
+as passed into the stdin of your program!
+	""".strip()
+elif secret_value_reg is not None:
 	check_runtime_prologue = f"""
 Let's check what your exit code is! It should be our secret
 value stored in register {secret_value_reg} ({secret_value_desc}) to succeed!
@@ -181,9 +187,14 @@ def check_runtime(filename):
 
 	try:
 		print("")
-		returncode = checker.dramatic_command(filename, actual_command = f"bash -c 'exec {filename} 2> >(tee /tmp/stderr 2>&1) > >(tee /tmp/stdout)'")
+		returncode = checker.dramatic_command(filename, stdin=stdin, actual_command = f"bash -c 'exec {filename} 2> >(tee /tmp/stderr 2>&1) > >(tee /tmp/stdout)'")
 		time.sleep(0.1)
 		for c in secret_checks:
+			if c == "cat":
+				actual_bytes = open(f"/tmp/stdout", "rb").read() #pylint:disable=consider-using-with,unspecified-encoding
+				assert actual_bytes == stdin, (
+					f"The value you wrote to stdout ({actual_bytes}) does not match the inputted value ({stdin})!"
+				)
 			if c in ["stdout", "stderr"]:
 				actual_bytes = open(f"/tmp/{c}", "rb").read() #pylint:disable=consider-using-with,unspecified-encoding
 				if type(secret_value) is int:
