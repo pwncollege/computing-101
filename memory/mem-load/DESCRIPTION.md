@@ -24,7 +24,7 @@ Consider that our memory looks like this:
 +────────────────────+
 ```
 
-To access the memory contents at memory address 31337, you would can do:
+To access the memory contents at memory address 31337, you can do:
 
 ```assembly
 mov rdi, [31337]
