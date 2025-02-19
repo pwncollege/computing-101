@@ -41,6 +41,13 @@ resources:
   video: IITocH-WGH4
   playlist: PL-ymxv0nOtqox6nF4HXtXHnTQFGkRQU_2
   slides: 1Y35BuIvvG8k3txjcsMXjygzsP7rDaNpbDHz3TMO91Fo
+- name: Tip - Debugging Your Assembly
+  type: markdown
+  content: |
+      These challenge are written in python and run your assembly code in an emulator.
+      This means you cannot use the normal debugging tools such as `gdb` to debug the challenge. However, we have added a special debug functionality to these challenges.
+      If an `int3` instruction is executed by the challenge in your assembly code, the emulator will print out the current state of the registers and memory.
+      This can be extremely useful to reason about your code!
 - name: Further Reading
   type: markdown
   content: |
