@@ -21,7 +21,7 @@ challenges:
 - id: level-10
   name: Concurrent POST Server
 - id: level-11
-  name: HTTP Server
+  name: Web Server
 resources:
 - name: "Building a Web Server: Introduction"
   type: lecture
