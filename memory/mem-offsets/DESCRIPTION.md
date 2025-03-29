@@ -25,12 +25,12 @@ For example, if your pointer (say, `rdi`) points to a sequence of numbers in mem
 If you want the second number of that sequence, you could do:
 
 ```assembly
-mov rax, [rdi+1]
+mov al, [rdi+1]
 ```
 
 Wow, super simple!
 In memory terms, we call these number slots _bytes_: each memory address represents a specific byte of memory.
-The above example is accessing memory 1 byte after the memory address pointed to by `rax`.
+The above example is accessing memory 1 byte after the memory address pointed to by `al`.
 In memory terms, we call this 1 byte difference an _offset_, so in this example, there is an offset of 1 from the address pointed to by `rdi`.
 
 Let's practice this concept.
