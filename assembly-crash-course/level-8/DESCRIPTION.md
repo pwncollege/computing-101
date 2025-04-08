@@ -59,3 +59,4 @@ Here are some truth tables for reference:
 Without using the following instructions: `mov`, `xchg`, please perform the following:
 
 Set `rax` to the value of `(rdi AND rsi)`
+**Tip:** You can assume that `rax` is initially filled with zeros.

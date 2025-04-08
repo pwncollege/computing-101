@@ -1,6 +1,6 @@
 We will be testing your code multiple times in this level with dynamic values! This means we will be running your code in a variety of random ways to verify that the logic is robust enough to survive normal use.
 
-In this level, you will be working with functions! This will involve manipulating the instruction pointer (rip), as well as doing harder tasks than normal. You may be asked to use the stack to store values or call functions that we provide you.
+In this level, you will be working with functions! This will involve manipulating the instruction pointer (`rip`), as well as doing harder tasks than normal. You may be asked to use the stack to store values or call functions that we provide you.
 
 In the previous level, you learned how to make your first function and how to call other functions. Now we will work with functions that have a function stack frame.
 
@@ -8,7 +8,7 @@ A function stack frame is a set of pointers and values pushed onto the stack to 
 
 First, let's talk about the special register `rbp`, the Stack Base Pointer.
 
-The `rbp` register is used to tell where our stack frame first started. As an example, say we want to construct some list (a contiguous space of memory) that is only used in our function. The list is 5 elements long, and each element is a dword. A list of 5 elements would already take 5 registers, so instead, we can make space on the stack!
+The `rbp` register is used to tell where our stack frame first started. As an example, say we want to construct some list (a contiguous space of memory) that is only used in our function. The list is 5 elements long, and each element is a `dword`. A list of 5 elements would already take 5 registers, so instead, we can make space on the stack!
 
 The assembly would look like:
 
@@ -38,15 +38,15 @@ most_common_byte(src_addr, size):
   i = 0
   while i <= size-1:
     curr_byte = [src_addr + i]
-    [stack_base - curr_byte] += 1
+    [stack_base - curr_byte * 2] += 1
     i += 1
 
-  b = 0
+  b = 1
   max_freq = 0
   max_freq_byte = 0
-  while b <= 0xff:
+  while b <= 0x100:
     if [stack_base - b] > max_freq:
-      max_freq = [stack_base - b]
+      max_freq = [stack_base - b * 2]
       max_freq_byte = b
     b += 1
 
@@ -55,8 +55,8 @@ most_common_byte(src_addr, size):
 
 **Assumptions:**
 
-- There will never be more than 0xffff of any byte
-- The size will never be longer than 0xffff
+- There will never be more than `0xffff` of any byte
+- The size will never be longer than `0xffff`
 - The list will have at least one element
 
 **Constraints:**
