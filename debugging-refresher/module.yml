@@ -14,8 +14,10 @@ challenges:
   name: level6
 - id: level-7
   name: level7
+  progression_locked: true
 - id: level-8
   name: level8
+  progression_locked: true
 resources:
 - name: Robert's GDB Walkthrough
   type: lecture
