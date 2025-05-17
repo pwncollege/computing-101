@@ -5,7 +5,7 @@ In this challenge, _you_ will build it!
 To build an executable binary, you need to:
 
 1. Write your assembly in a file (often with a `.S` or `.s` syntax. We'll use `asm.s` in this example).
-2. Assemble your binary into an executable _object file_ (using the `as` command).
+2. Assemble your assembly file into an _object file_ (using the `as` command).
 3. Link one or more executable object files into a final executable binary (using the `ld` command)!
 
 Let's take this step by step:
