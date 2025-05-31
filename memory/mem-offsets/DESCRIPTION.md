@@ -30,7 +30,7 @@ mov rax, [rdi+1]
 
 Wow, super simple!
 In memory terms, we call these number slots _bytes_: each memory address represents a specific byte of memory.
-The above example is accessing memory 1 byte after the memory address pointed to by `rax`.
+The above example is accessing memory 1 byte after the memory address pointed to by `rdi`.
 In memory terms, we call this 1 byte difference an _offset_, so in this example, there is an offset of 1 from the address pointed to by `rdi`.
 
 Let's practice this concept.
