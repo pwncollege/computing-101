@@ -20,7 +20,7 @@ So, if you type in (or pipe in) `HELLO HACKERS` into stdin, the above `read` cal
 │ 1337001 │ 45       │
 │ 1337002 │ 4c       │
 │ 1337003 │ 4c       │
-│ 1337004 │ 51       │
+│ 1337004 │ 4f       │
 +────────────────────+
 ```
 
