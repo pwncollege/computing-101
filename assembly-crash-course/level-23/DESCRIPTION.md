@@ -41,7 +41,7 @@ most_common_byte(src_addr, size):
     [stack_base - curr_byte * 2] += 1
     i += 1
 
-  b = 1
+  b = 0
   max_freq = 0
   max_freq_byte = 0
   while b <= 0x100:
