@@ -52,7 +52,7 @@ else:
 ```
 
 Where:
-- `x = rdi`, `y = rax`.
+- `x = edi`, `y = eax`.
 
 Assume each dereferenced value is a signed dword. This means the values can start as a negative value at each memory position.
 
