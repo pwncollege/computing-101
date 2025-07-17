@@ -2,7 +2,7 @@ You now know how to output data to stdout using `write`.
 But how does your program receive input data?
 It `read`s it from stdin!
 
-Like `write`, `read` is a system call that shunts data around between file descriptors and memory.
+Like `write`, `read` is a system call that shunts data around between file descriptors and memory, and its syscall number is `0`.
 In `read`'s case, it reads some amount of bytes from the provided file descriptor and stores them in memory.
 The C-style syntax is the same as `write`:
 
