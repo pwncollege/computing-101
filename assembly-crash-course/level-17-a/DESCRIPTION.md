@@ -23,6 +23,6 @@ For all jumps, there are three types:
 - Absolute jumps: jump to a specific address.
 - Indirect jumps: jump to the memory address specified in a register.
 
-In x86, absolute jumps (jump to a specific address) are accomplished by first putting the target address in a register `reg`, then doing `jmp reg`.
+In x86, absolute jumps (jump to a specific address) are accomplished by first loading the target address into a general-purpose register (we'll call this placeholder `reg`), then doing `jmp reg`.
 
 In this level, we will ask you to do an absolute jump. Perform the following: Jump to the absolute address `0x403000`.
