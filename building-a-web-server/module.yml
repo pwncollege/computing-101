@@ -1,4 +1,5 @@
 name: Building a Web Server
+privileged: true
 challenges:
 - id: level-1
   name: Exit
