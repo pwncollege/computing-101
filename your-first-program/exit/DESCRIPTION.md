@@ -8,7 +8,7 @@ The operating system manages the existence of programs and interactions between 
 Your programs "interact" with the CPU using assembly instructions such as the `mov` instruction you wrote earlier.
 Similarly, your programs interact with the operating system (via the CPU, of course) using the `syscall`, or _System Call_ instruction.
 
-Like how you might use a phone call to interact with a local restaraunt to order food, programs use system calls to request the operating system to carry out actions on the program's behalf.
+Like how you might use a phone call to interact with a local restaurant to order food, programs use system calls to request the operating system to carry out actions on the program's behalf.
 As a bit of an overgeneralization, anything your program does that doesn't involve performing computation on data is done with a system call.
 
 There are a lot of different system calls your program can invoke.
