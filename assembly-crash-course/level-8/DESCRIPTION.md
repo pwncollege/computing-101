@@ -56,6 +56,10 @@ Here are some truth tables for reference:
   1 | 1 | 0
   ```
 
-Without using the following instructions: `mov`, `xchg`, please perform the following:
+Without using the following instructions: `mov`, `xchg`
+
+Please perform the following:
 
 Set `rax` to the value of `(rdi AND rsi)`
+
+Note: `rax` will have all bits set to `1`
