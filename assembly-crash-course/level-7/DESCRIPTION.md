@@ -8,7 +8,7 @@ Shifting bits around in assembly is another interesting concept!
 
 x86 allows you to 'shift' bits around in a register.
 
-Take, for instance, `al`, the lowest 8 significant bits of `rax`.
+Take, for instance, `al`, the lowest 8 (or _least significant_ 8) bits of `rax`.
 
 The value in `al` (in bits) is:
 
@@ -28,7 +28,7 @@ The new value is:
 al = 00010100
 ```
 
-Everything shifted to the left, and the highest significant bit fell off while a new 0 was added to the right side.
+Everything shifted to the left, and the highest (or _most significant_) bit fell off while a new 0 was added to the right side.
 
 You can use this to do special things to the bits you care about.
 
@@ -43,8 +43,9 @@ Note: 'reg2' can be replaced by a constant or memory location.
 
 When we say *significant bit* or *least significant byte*, *significant* means "most important for the value."
 
+- The *least significant bit/byte* carries the smallest weight (the "lowest" place value). For example, when you modify the "lowest" or "rightmost" bit, the value changes just by 1.
 - The *most significant bit/byte* carries the highest weight (the "highest" place value).
-- The *least significant bit/byte* carries the smallest weight (the "lowest" place value).
+
 
 **For this challenge**, using only the following instructions:
 
