@@ -62,4 +62,7 @@ Please perform the following:
 
 Set `rax` to the value of `(rdi AND rsi)`
 
-Note: `rax` will have all bits set to `1`
+----
+**NOTE:**
+`rax` will have all bits set to `1`
+If it didn't, this level would be trickier!
