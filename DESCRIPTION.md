@@ -1,4 +1,4 @@
-Computers run an incredible managerie of programs that make modern life possible.
+Computers run an incredible menagerie of programs that make modern life possible.
 But how do they work, deep down inside?
 In this dojo, we will dive into the depths of computation, reach (something close to) its very underpinnings, and strive to understand it all.
 
