@@ -38,7 +38,7 @@ hacker@dojo:~$
 `.intel_syntax noprefix` tells the assembler that you will be using Intel assembly syntax, and specifically the variant of it where you don't have to add extra prefixes to every instruction.
 We'll talk about these later, but for now, we'll let the assembler figure it out!
 
-**Assembling object files!**  
+**Assembling Assembly Code into Object Files.**  
 Next, we'll assemble the code.
 This is done using the **as**sembler, `as`, as so:
 
@@ -60,7 +60,7 @@ Here, the `as` tool reads in `asm.s`, assembles it into binary code, and outputs
 This object file has actual assembled binary code, but it is not yet ready to be run.
 First, we need to _link_ it.
 
-**Linking executables.**  
+**Linking Object Files into an Executable.**  
 In a typical development workflow, source code is compiled and assembly is assembled to object files, and there are typically many of these (generally, each source code file in a program compiles into its own object file).
 These are then _linked_ together into a single executable.
 Even if there is only one file, we still need to link it, to prepare the final executable.
