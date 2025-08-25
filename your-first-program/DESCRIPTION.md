@@ -12,7 +12,7 @@ This computation is done by the _Central Processing Unit_ (CPU), in tandem with 
 Instructions are specified to the CPU in something called _Assembly Language_, and each CPU architecture uses a different flavor of this language.
 Any program, no matter what language it is originally written in (e.g., C, C++, Java, Python, etc.), is eventually converted to or interpreted by Assembly instructions.
 
-Most of pwn.college's material uses the [x86 CPU architecture](https://en.wikipedia.org/wiki/X86), which is Zardus' favourite architecture.
+Most of pwn.college's material uses the [x86 CPU architecture](https://en.wikipedia.org/wiki/X86), which is Zardus' favorite architecture.
 x86 was created by Intel in the dawn of the PC age, and has continued to evolve over the years.
 Together, x86 and ARM (a different, less cool architecture) make up the majority of PC CPUs out there.
 
