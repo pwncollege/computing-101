@@ -1,4 +1,4 @@
-Next, lets move on to GDB.
+Next, let's move on to GDB.
 GDB stands for the **G**NU **D**e**b**ugger, and it is typically used to hunt down and understand bugs.
 More specifically, a debugger is a tool that enables the close monitoring and introspection of another process.
 There are many famous debuggers, and in the Linux space, gdb is by far the most common.
