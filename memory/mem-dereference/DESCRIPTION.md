@@ -58,4 +58,4 @@ But if we write `mov rdi, rax` in the same conditions, the CPU just happily puts
 To the CPU, data is data; it only becomes differentiated when it's used in different ways.
 
 In this challenge, we've initialized `rax` to contain the address of the secret data we've stored in memory.
-Dereference `rax` to the secret data into `rdi` and use it as the exit code of the program to get the flag!
+Dereference `rax` to load the secret data into `rdi` and use it as the exit code of the program to get the flag!
