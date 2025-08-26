@@ -3,4 +3,4 @@ When this happens, you'll need to have a reliable toolbox of resources to unders
 Of course, the _exact same_ techniques can be used to understand what is wrong with code that you _didn't_ write, and fix or exploit it as you might desire!
 
 This module will introduce you to several ways to introspect, debug, and understand software.
-You'll cary this critical knowledge with you and use it throughout pwn.college, so harken well!
+You'll carry this critical knowledge with you and use it throughout pwn.college, so harken well!
