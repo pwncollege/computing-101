@@ -6,7 +6,7 @@ This has analogues in your normal life: you might subscribe to multiple YouTube 
 However, like a CPU switching between programs, you might indulge changing interests and interleave episodes of different shows.
 
 A program is made of _computer code_, and this code is made of a huge amount of individual _instructions_ that cause the computer to carry out computation and take certain actions based on the results.
-Each individual instruction is typically very simple, and only in aggregate do they enable awesome things like let you look at memes on the internet.
+Each individual instruction is typically very simple, and only in aggregate do they enable awesome things like letting you look at memes on the internet.
 
 This computation is done by the _Central Processing Unit_ (CPU), in tandem with other pieces of hardware inside your computer.
 Instructions are specified to the CPU in something called _Assembly Language_, and each CPU architecture uses a different flavor of this language.
