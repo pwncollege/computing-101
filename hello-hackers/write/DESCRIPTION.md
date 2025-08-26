@@ -25,7 +25,7 @@ This is slow, and so we try to minimize the number of times we invoke system cal
 
 Of course, the solution to this is to write multiple characters at the same time.
 The `write` system call does this by taking _two_ parameters for the "what": a _where_ (in memory) to start writing from and a _how many_ characters to write.
-These parameters are passed as the second and third parameter to `write`.
+These parameters are passed as the second and third parameters to `write`.
 In the kinda-C syntax that we learned from `strace`, this would be:
 
 ```c
