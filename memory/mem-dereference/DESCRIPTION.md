@@ -35,7 +35,7 @@ Now, what you have is the following situation:
   +────────────────────+
 ```
 
-`rax` now holds a value that corresponds with the address of the data that want to load!
+`rax` now holds a value that corresponds with the address of the data that we want to load!
 Let's load it:
 
 ```assembly
