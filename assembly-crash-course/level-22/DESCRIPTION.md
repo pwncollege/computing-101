@@ -29,7 +29,7 @@ The "ret" instruction is the opposite of "call".
 Let's use the following instructions and stack as an example:
 
 ```
-Stack ADDR  VALUE
+                            Stack ADDR  VALUE
 0x103f mov rax, rdx         RSP + 0x8   0xdeadbeef
 0x1042 ret                  RSP + 0x0   0x0000102a
 ```
