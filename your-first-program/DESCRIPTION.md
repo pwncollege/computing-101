@@ -1,10 +1,6 @@
 Computers run _computer programs_ to achieve different goals.
 One program might be your favorite video game, another is the web browser you're using to access this website, and so on.
 
-Though your computer might be running multiple programs at the same time, each CPU will focus on one program at a time (note: this is not fully accurate, but good enough for us for now!).
-This has analogues in your normal life: you might subscribe to multiple YouTube channels, but at any given moment, you're most likely only watching one episode at a time.
-However, like a CPU switching between programs, you might indulge changing interests and interleave episodes of different shows.
-
 A program is made of _computer code_, and this code is made of a huge amount of individual _instructions_ that cause the computer to carry out computation and take certain actions based on the results.
 Each individual instruction is typically very simple, and only in aggregate do they enable awesome things like letting you look at memes on the internet.
 
