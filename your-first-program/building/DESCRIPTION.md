@@ -4,7 +4,7 @@ In this challenge, _you_ will build it!
 
 To build an executable binary, you need to:
 
-1. Write your assembly in a file (often with a `.S` or `.s` syntax. We'll use `asm.s` in this example).
+1. Write your assembly in a file (often with a `.S` or `.s` syntax. We'll use `program.s` in this example).
 2. Assemble your assembly file into an _object file_ (using the `as` command).
 3. Link one or more executable object files into a final executable binary (using the `ld` command)!
 
@@ -15,7 +15,7 @@ The assembly file contains, well, your assembly code.
 For the previous level, this might be:
 
 ```console
-hacker@dojo:~$ cat asm.s
+hacker@dojo:~$ cat program.s
 mov rdi, 42
 mov rax, 60
 syscall
@@ -27,7 +27,7 @@ We mentioned that we're using the _Intel_ assembly syntax in this course, and we
 You do this by prepending a directive to the beginning of your assembly code, as such:
 
 ```console
-hacker@dojo:~$ cat asm.s
+hacker@dojo:~$ cat program.s
 .intel_syntax noprefix
 mov rdi, 42
 mov rax, 60
@@ -36,7 +36,8 @@ hacker@dojo:~$
 ```
 
 `.intel_syntax noprefix` tells the assembler that you will be using Intel assembly syntax, and specifically the variant of it where you don't have to add extra prefixes to every instruction.
-We'll talk about these later, but for now, we'll let the assembler figure it out!
+It isn't actually an x86 instruction (like `mov` and `syscall`), and so it doesn't end up in our final executable binary or runs on the CPU.
+We'll talk about other directives later, but for now, we'll let the assembler figure it out!
 
 **Assembling Assembly Code into Object Files.**  
 Next, we'll assemble the code.
@@ -44,19 +45,19 @@ This is done using the **as**sembler, `as`, as so:
 
 ```console
 hacker@dojo:~$ ls
-asm.s
-hacker@dojo:~$ cat asm.s
+program.s
+hacker@dojo:~$ cat program.s
 .intel_syntax noprefix
 mov rdi, 42
 mov rax, 60
 syscall
-hacker@dojo:~$ as -o asm.o asm.s
+hacker@dojo:~$ as -o program.o program.s
 hacker@dojo:~$ ls
-asm.o   asm.s
+program.o   program.s
 hacker@dojo:~$
 ```
 
-Here, the `as` tool reads in `asm.s`, assembles it into binary code, and outputs an _object file_ called `asm.o`.
+Here, the `as` tool reads in `program.s`, assembles it into binary code, and outputs an _object file_ called `program.o`.
 This object file has actual assembled binary code, but it is not yet ready to be run.
 First, we need to _link_ it.
 
@@ -68,23 +69,25 @@ This is done with the `ld` (stemming from the term "**l**ink e**d**itor") comman
 
 ```console
 hacker@dojo:~$ ls
-asm.o   asm.s
-hacker@dojo:~$ ld -o exe asm.o
+program.o   program.s
+hacker@dojo:~$ ld -o program program.o
 ld: warning: cannot find entry symbol _start; defaulting to 0000000000401000
 hacker@dojo:~$ ls
-asm.o   asm.s   exe
+program.o   program.s   program
 hacker@dojo:~$
 ```
 
-This creates an `exe` file that we can then run!
+This creates an `program` file that we can then run!
 Here it is:
 
 ```console
-hacker@dojo:~$ ./exe
+hacker@dojo:~$ ./program
 hacker@dojo:~$ echo $?
 42
 hacker@dojo:~$
 ```
+
+In the shell, `$?` holds the exit code of the last executed command.
 
 Neat!
 Now you can build programs.
@@ -101,16 +104,16 @@ This is just fine for us!
 If you want to silence the error, you can specify the `_start` symbol, in your code, as so:
 
 ```console
-hacker@dojo:~$ cat asm.s
+hacker@dojo:~$ cat program.s
 .intel_syntax noprefix
 .global _start
 _start:
 mov rdi, 42
 mov rax, 60
 syscall
-hacker@dojo:~$ as -o asm.o asm.s
-hacker@dojo:~$ ld -o exe asm.o
-hacker@dojo:~$ ./exe
+hacker@dojo:~$ as -o program.o program.s
+hacker@dojo:~$ ld -o program program.o
+hacker@dojo:~$ ./program
 hacker@dojo:~$ echo $?
 42
 hacker@dojo:~$
