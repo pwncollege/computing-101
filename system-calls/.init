@@ -1,0 +1,123 @@
+#!/usr/bin/python
+
+import os
+import random
+import subprocess
+from pathlib import Path
+
+import jinja2
+
+
+config_path = Path(__file__).parent / ".config"
+passwords_template_path = Path(__file__).parent / "passwords.c.j2"
+
+passwords_dir = Path("/tmp/.password")
+passwords_dir.mkdir(parents=True, exist_ok=True)
+password_paths = []
+for _ in range(256):
+    passwords_path = passwords_dir / os.urandom(8).hex()
+    passwords_path.write_text(os.urandom(32).hex() + "\n")
+    password_paths.append(passwords_path)
+
+def compile_password_checker(operations):
+    passwords_template = jinja2.Template(passwords_template_path.read_text())
+    subprocess.run(["/usr/bin/gcc", "-o", "/challenge/check-password", "-x", "c", "-"],
+                   input=passwords_template.render(operations=operations),
+                   text=True,
+                   check=True)
+
+def challenge_password():
+    operations = [
+        {"type": "open", "path": str(password_paths[0])},
+        {"type": "read", "fd": 0, "offset": 0, "size": 64},
+        {"type": "close", "fd": 0},
+        {"type": "cmp", "prompt": "Password: ", "offset": 0, "size": 64}
+    ]
+    return operations
+
+def challenge_multiple_passwords():
+    password_count = 3
+    operations = []
+    for i in range(password_count):
+        operations.extend([
+            {"type": "open", "path": str(password_paths[i])},
+            {"type": "read", "fd": 0, "offset": 0, "size": 64},
+            {"type": "close", "fd": 0},
+            {"type": "cmp", "prompt": "Password: ", "offset": 0, "size": 64}
+        ])
+    return operations
+
+def challenge_fd_passwords():
+    password_count = 3
+    operations = []
+    for fd in range(256):
+        operations.append({"type": "open", "path": str(password_paths[fd])})
+    random_fds = random.sample(range(256), password_count)
+    for fd in random_fds:
+        operations.extend([
+            {"type": "read", "fd": fd, "offset": 0, "size": 64},
+            {"type": "cmp", "prompt": "Password: ", "offset": 0, "size": 64}
+        ])
+    return operations
+
+def challenge_size_passwords():
+    password_count = 3
+    operations = []
+    for fd in range(256):
+        operations.append({"type": "open", "path": str(password_paths[fd])})
+    for fd in random.sample(range(256), password_count):
+        random_size = random.randint(16, 64)
+        operations.extend([
+            {"type": "read", "fd": fd, "offset": 0, "size": random_size},
+            {"type": "cmp", "prompt": "Password: ", "offset": 0, "size": random_size}
+        ])
+    return operations
+
+def challenge_offset_passwords():
+    password_count = 8
+    operations = []
+    for fd in range(256):
+        operations.append({"type": "open", "path": str(password_paths[fd])})
+    random_fds = random.sample(range(256), password_count)
+    random_offsets = random.shuffle([64 * i for i in range(password_count)])
+    for fd, offset in zip(random_fds, random_offsets):
+        operations.append(
+            {"type": "read", "fd": fd, "offset": offset, "size": 64},
+        )
+    operations.append(
+        {"type": "cmp", "prompt": "Password: ", "offset": 0, "size": 64 * password_count}
+    )
+    return operations
+
+def challenge_overlapping_passwords():
+    password_count = 5
+    operations = []
+    for fd in range(256):
+        operations.append({"type": "open", "path": str(password_paths[fd])})
+    random_fds = random.sample(range(256), password_count)
+    random_offset = 0
+    random_offsets = [random_offset]
+    for _ in range(password_count - 1):
+        random_offset = random.randrange(16, 48) + random_offset
+        random_offsets.append(random_offset)
+    total_size = random_offset + 64
+    for fd, offset in zip(random_fds, random_offsets):
+        operations.append(
+            {"type": "read", "fd": fd, "offset": offset, "size": 64},
+        )
+    operations.append(
+        {"type": "cmp", "prompt": "Password: ", "offset": 0, "size": total_size}
+    )
+    return operations
+
+if __name__ == "__main__":
+    challenge = "challenge_" + config_path.read_text().strip()
+    if challenge not in globals():
+        raise RuntimeError(f"Unknown challenge: {challenge}")
+
+    operations = globals()[challenge]()
+    compile_password_checker(operations)
+
+    os.unlink(config_path)
+    os.unlink(passwords_template_path)
+    os.unlink(__file__)

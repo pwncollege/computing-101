@@ -1,0 +1,14 @@
+name: System Calls
+challenges:
+- id: password
+  name: "Password"
+- id: multiple-passwords
+  name: "Multiple Passwords"
+- id: fd-passwords
+  name: "File Descriptors"
+- id: size-passwords
+  name: "Sizes"
+- id: overlapping-passwords
+  name: "Overlapping"
+- id: offset-passwords
+  name: "Offsets"
