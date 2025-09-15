@@ -1,28 +1,73 @@
 name: Building a Web Server
 privileged: true
 challenges:
-- id: level-1
+- id: exit
   name: Exit
-- id: level-2
+  transfer:
+    dojo: computing-101
+    module: building-a-web-server
+    challenge: level-1
+- id: socket
   name: Socket
-- id: level-3
+  transfer:
+    dojo: computing-101
+    module: building-a-web-server
+    challenge: level-2
+- id: bind
   name: Bind
-- id: level-4
+  transfer:
+    dojo: computing-101
+    module: building-a-web-server
+    challenge: level-3
+- id: listen
   name: Listen
-- id: level-5
+  transfer:
+    dojo: computing-101
+    module: building-a-web-server
+    challenge: level-4
+- id: accept
   name: Accept
-- id: level-6
+  transfer:
+    dojo: computing-101
+    module: building-a-web-server
+    challenge: level-5
+  name: Accept
+- id: static-response
   name: Static Response
-- id: level-7
+  transfer:
+    dojo: computing-101
+    module: building-a-web-server
+    challenge: level-6
+- id: dynamic-response
   name: Dynamic Response
-- id: level-8
+  transfer:
+    dojo: computing-101
+    module: building-a-web-server
+    challenge: level-7
+- id: iterative-get-server
   name: Iterative GET Server
-- id: level-9
+  transfer:
+    dojo: computing-101
+    module: building-a-web-server
+    challenge: level-8
+- id: concurrent-get-server
   name: Concurrent GET Server
-- id: level-10
+  transfer:
+    dojo: computing-101
+    module: building-a-web-server
+    challenge: level-9
+- id: concurrent-post-server
   name: Concurrent POST Server
-- id: level-11
+  transfer:
+    dojo: computing-101
+    module: building-a-web-server
+    challenge: level-10
+- id: web-server
   name: Web Server
+  transfer:
+    dojo: computing-101
+    module: building-a-web-server
+    challenge: level-11
 resources:
 - name: "Building a Web Server: Introduction"
   type: lecture
