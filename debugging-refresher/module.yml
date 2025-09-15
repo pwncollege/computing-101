@@ -2,54 +2,22 @@ name: Debugging Refresher
 challenges:
 - id: debugging-programs
   name: Debugging Programs
-  transfer:
-    dojo: computing-101
-    module: debugging-refresher
-    challenge: level-1
 - id: inspecting-registers
   name: Inspecting Registers
-  transfer:
-    dojo: computing-101
-    module: debugging-refresher
-    challenge: level-2
 - id: examining-memory
   name: Examining Memory
-  transfer:
-    dojo: computing-101
-    module: debugging-refresher
-    challenge: level-3
 - id: setting-breakpoints
   name: Setting Breakpoints
-  transfer:
-    dojo: computing-101
-    module: debugging-refresher
-    challenge: level-4
 - id: gdb-scripting
   name: GDB Scripting
-  transfer:
-    dojo: computing-101
-    module: debugging-refresher
-    challenge: level-5
 - id: modifying-data
   name: Modifying Data
-  transfer:
-    dojo: computing-101
-    module: debugging-refresher
-    challenge: level-6
 - id: modifying-execution
   name: Modifying Execution
   progression_locked: true
-  transfer:
-    dojo: computing-101
-    module: debugging-refresher
-    challenge: level-7
 - id: broken-functions
   name: Broken Functions
   progression_locked: true
-  transfer:
-    dojo: computing-101
-    module: debugging-refresher
-    challenge: level-8
 resources:
 - name: Robert's GDB Walkthrough
   type: lecture
