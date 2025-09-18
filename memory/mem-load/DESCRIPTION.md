@@ -36,8 +36,8 @@ The CPU will then go to that address, ring its doorbell, open its front door, dr
 Thus, the `31337` in this context is the _memory address_ and serves to _point to_ the data stored at that memory address.
 After this instruction executes, the value stored in `rdi` will be `42`!
 
-Let's put this into practice!
-I've stored a secret number at memory address `133700`, as so:
+Let us put this into practice!
+I have stored a secret number at memory address `133700`, as so:
 
 ```text
   Address │ Contents
@@ -47,5 +47,6 @@ I've stored a secret number at memory address `133700`, as so:
 ```
 
 You must retrieve this secret number and use it as the exit code for your program.
-To do this, you must read it into `rdi`, whose value, if you recall, is the first parameter to `exit` and is used as the exit code.
+To do this, you must read it into `rdi`, whose value, if you recall, is the first parameter to `exit` and is used as the exit code. Review your previously created program in the "Your first program" lessons for details on the code. You will not need to build the program this time, I will handle that for you this time.
+The /challenge/check program starts an interactive text entry element when run, or the program can accept stdin from a text file as an argument.
 Good luck!
