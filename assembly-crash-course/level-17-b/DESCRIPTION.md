@@ -1,11 +1,12 @@
-We will now be working with control flow manipulation. On each run, the code may be placed at different addresses, so you will need to write instructions that can adapt to their location in memory. In most cases, you will want to set the result in `rax`.
+We will now set some values in memory dynamically before each run. On each run, the values will change. This means you will need to perform some type of formulaic operation with registers. We will tell you which registers are set beforehand and where you should put the result. In most cases, it's `rax`.
 
-In this level, you will be working with the Instruction Pointer `rip`. Normally, the CPU executes instructions one after another in a straight line. By directly modifying `rip`, you can make the CPU skip over parts of your code or jump to a specific location dynamically.
+In this level, you will be working with control flow manipulation. This involves using instructions to both indirectly and directly control the special register `rip`, the instruction pointer. You will use instructions such as `jmp`, `call`, `cmp`, and their alternatives to implement the requested behavior.
 
-Recall that there are three types of jumps you might encounter:
-* Relative jumps: jump a certain number of bytes forward or backward from the current instruction.
-* Absolute jumps: jump to a fixed memory address.
-* Indirect jumps: jump to the address stored in a register or memory location.
+Recall that for all jumps, there are three types:
+
+- Relative jumps: jump a certain number of bytes forward or backward from the current instruction.
+- Absolute jumps: jump to a fixed memory address.
+- Indirect jumps: jump to the address stored in a register or memory location.
 
 Here, we are focusing on relative jumps. This means you will tell the CPU to “jump forward a certain number of bytes from where you are currently executing.” This is useful because your code can move in memory and the jump will still reach the correct target.
 
