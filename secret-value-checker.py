@@ -135,7 +135,7 @@ def check_disassembly(disas):
 			earliest_nonderef_overwrite = min(i for i,m in enumerate(mov_operands) if m[0] == secret_addr_reg and "[" not in m[1])
 			assert earliest_nonderef_overwrite >= idx_deref, (
 				f"Uh oh! It looks like you're overwriting the address in {secret_addr_reg} before\n"
-				"dereferncing it. Once you overwrite this value, you will lose the secret\n"
+				"dereferencing it. Once you overwrite this value, you will lose the secret\n"
 				"address that we initialized it with! Dereference it first before overwriting\n"
 				"it.\n"
 			)
