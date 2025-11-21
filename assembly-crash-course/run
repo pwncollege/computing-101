@@ -1296,7 +1296,7 @@ class ASMLevel18(ASMBase):
         Say we access the quad word at 0x1337:
           [0x1337] = 0x00000000deadbeef
 
-        The real way memory is layed out is byte by byte, little endian:
+        The real way memory is laid out is byte by byte, little endian:
           [0x1337] = 0xef
           [0x1337 + 1] = 0xbe
           [0x1337 + 2] = 0xad
@@ -1627,7 +1627,7 @@ class ASMLevel24(ASMBase):
     """
     Jump to provided code:
     1. relative jump
-    2. absoulte jump
+    2. absolute jump
     """
 
     CODE_ADDR = ASMBase.CODE_ADDR + random.randint(0x10, 0x100)
@@ -1864,7 +1864,7 @@ class ASMLevel26(ASMBase):
 
         You can consider this a reduced else-if type structure.
 
-        In x86, you are already used to using numbers, so it should be no suprise that you can make if statements based on something being an exact number.
+        In x86, you are already used to using numbers, so it should be no surprise that you can make if statements based on something being an exact number.
 
         In addition, if you know the range of the numbers, a switch statement works very well.
 
@@ -2255,7 +2255,7 @@ class ASMLevel30(ASMBase):
 
         The rbp register is used to tell where our stack frame first started.
 
-        As an example, say we want to construct some list (a contigous space of memory) that is only used in our function.
+        As an example, say we want to construct some list (a contiguous space of memory) that is only used in our function.
 
         The list is 5 elements long, and each element is a dword.
 

@@ -15,5 +15,5 @@ skip_deref_checks = True
 success_message = """
 Wow, you wrote an "H"!!!!!!! But why did your program crash? Well, you didn't
 exit, and as before, the CPU kept executing and eventually crashed. In the next
-level, we will learn how to chain two system calls togeter: write and exit!
+level, we will learn how to chain two system calls together: write and exit!
 """
