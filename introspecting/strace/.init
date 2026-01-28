@@ -1,6 +1,6 @@
 #!/opt/pwn.college/bash
 
-ASM=$(mktemp).o
+ASM=$(mktemp --suffix=.o)
 as -o $ASM <<< ".intel_syntax noprefix; mov rdi, $RANDOM; mov rax, 37; syscall; mov rdi, 0; mov rax, 60; syscall"
 ld -o /challenge/trace-me $ASM 2>/tmp/.init.log
 rm $ASM
