@@ -8,6 +8,7 @@ modules:
 - id: your-first-program
 - id: introspecting
 - id: memory
+- id: advanced-memory
 - id: hello-hackers
 - id: assembly-crash-course
 - id: debugging-refresher
