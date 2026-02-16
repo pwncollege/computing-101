@@ -1,0 +1,9 @@
+name: Advanced Memory
+
+challenges:
+- id: mem-triple-deref
+  name: "Triple Dereference"
+  transfer:
+    dojo: computing-101
+    module: memory
+    challenge: mem-triple-deref
